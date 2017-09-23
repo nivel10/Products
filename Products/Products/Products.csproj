@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="ViewModels\CategoriesViewModel.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Product.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
