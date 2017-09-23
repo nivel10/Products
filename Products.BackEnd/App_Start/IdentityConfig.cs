@@ -53,11 +53,17 @@ namespace Products.BackEnd
             // Configure la lógica de validación de contraseñas
             manager.PasswordValidator = new PasswordValidator
             {
+                //RequiredLength = 6,
+                //RequireNonLetterOrDigit = true,
+                //RequireDigit = true,
+                //RequireLowercase = true,
+                //RequireUppercase = true,
+
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Configurar valores predeterminados para bloqueo de usuario

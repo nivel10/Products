@@ -1,12 +1,16 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web.Mvc;
-using Products.BackEnd.Models;
-using Products.Domain;
-
-namespace Products.BackEnd.Controllers
+﻿namespace Products.BackEnd.Controllers
 {
+    using System.Data.Entity;
+    using System.Threading.Tasks;
+    using System.Net;
+    using System.Web.Mvc;
+    using Products.BackEnd.Models;
+    using Products.Domain;
+
+    //  El Autorize obliga al usuario que este logueado para poder acceder al mismo \\
+    //  [Authorize(Roles ="Admin")]
+    [Authorize(Users = "carlos.e.herrera.j@gmail.com")]
+
     public class ProductsController : Controller
     {
         private DataContextLocal db = new DataContextLocal();
@@ -45,7 +49,7 @@ namespace Products.BackEnd.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ProductId,CategoryId,Description,Price,IsActive,LastPurchase,Stock,Remarks")] Product product)
+        public async Task<ActionResult> Create(Product product)
         {
             if (ModelState.IsValid)
             {

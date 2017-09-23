@@ -1,12 +1,15 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web.Mvc;
-using Products.BackEnd.Models;
-using Products.Domain;
-
-namespace Products.BackEnd.Controllers
+﻿namespace Products.BackEnd.Controllers
 {
+    using System.Data.Entity;
+    using System.Threading.Tasks;
+    using System.Net;
+    using System.Web.Mvc;
+    using Products.BackEnd.Models;
+    using Products.Domain;
+
+    //  El Autorize obliga al usuario que este logueado para poder acceder al mismo \\
+    //  [Authorize(Roles ="Admin")]
+    [Authorize(Users ="carlos.e.herrera.j@gmail.com")]
     public class CategoriesController : Controller
     {
         private DataContextLocal db = new DataContextLocal();
