@@ -8,6 +8,8 @@
     using System.Web.Http;
     using System.Web.Http.Description;
     using Products.Domain;
+    using System.Collections.Generic;
+    using Products.API.Models;
 
     //  El Autorize obliga al usuario que este logueado para poder acceder al mismo \\
     //  [Authorize(Roles ="Admin")]
@@ -18,9 +20,44 @@
         private DataContext db = new DataContext();
 
         // GET: api/Categories
-        public IQueryable<Category> GetCategories()
+        //public IQueryable<Category> GetCategories()
+        //{
+        //    return db.Categories;
+        //}
+
+        public async Task<IHttpActionResult> GetCategory()
         {
-            return db.Categories;
+            var categories = await db.Categories.ToListAsync();
+            var categoriesResponse = new List<CategoryResponse>();
+
+            //  Recorre cada Category y lo asigna al objeto CategoryResponse
+            foreach (var category in categories)
+            {
+                //  Recorre el objeto Product dentro de cada categoria y lo asigna al ProductResponse
+                var productsResponse = new List<ProductResponse>();
+                foreach (var product in category.Products)
+                {
+                    productsResponse.Add(new ProductResponse
+                    {
+                        Description = product.Description,
+                        Image = product.Image,
+                        IsActive = product.IsActive,
+                        LastPurchase = product.LastPurchase,
+                        Price = product.Price,
+                        ProductId = product.ProductId,
+                        Remarks = product.Remarks,
+                        Stock = product.Stock,
+                    });
+                }
+
+                categoriesResponse.Add(new CategoryResponse
+                {
+                    CategoryId = category.CategoryId,
+                    Description = category.Description,
+                    Products = productsResponse,
+                });
+            }
+            return Ok(categoriesResponse);
         }
 
         // GET: api/Categories/5
