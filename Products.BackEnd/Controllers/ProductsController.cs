@@ -6,6 +6,8 @@
     using System.Web.Mvc;
     using Products.BackEnd.Models;
     using Products.Domain;
+    using Products.BackEnd.Helpers;
+    using System;
 
     //  El Autorize obliga al usuario que este logueado para poder acceder al mismo \\
     //  [Authorize(Roles ="Admin")]
@@ -49,17 +51,28 @@
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Product product)
+        public async Task<ActionResult> Create(ProductView view)
         {
             if (ModelState.IsValid)
             {
+                var pic = string.Empty;
+                var folder = "~/Content/Images";
+
+                if (view.ImageFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImageFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+
+                var product = ToProduct(view);
+                product.Image = pic;
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", product.CategoryId);
-            return View(product);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", view.CategoryId);
+            return View(view);
         }
 
         // GET: Products/Edit/5
@@ -75,7 +88,8 @@
                 return HttpNotFound();
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", product.CategoryId);
-            return View(product);
+            var view = ToView(product);
+            return View(view);
         }
 
         // POST: Products/Edit/5
@@ -83,16 +97,27 @@
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ProductId,CategoryId,Description,Price,IsActive,LastPurchase,Stock,Remarks")] Product product)
+        public async Task<ActionResult> Edit(ProductView view)
         {
             if (ModelState.IsValid)
             {
+                var pic = view.Image;
+                var folder = "~/Content/Images";
+
+                if (view.ImageFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.ImageFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+
+                var product = ToProduct(view);
+                product.Image = pic;
                 db.Entry(product).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", product.CategoryId);
-            return View(product);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Description", view.CategoryId);
+            return View(view);
         }
 
         // GET: Products/Delete/5
@@ -119,6 +144,51 @@
             db.Products.Remove(product);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Metodo que convierte el objeto ProductView wn Product
+        /// </summary>
+        /// <param name="view">Objeto de tipo ProductView</param>
+        /// <returns>Objeto Product</returns>
+        private Product ToProduct(ProductView view)
+        {
+            return new Product
+            {
+                Category = view.Category,
+                CategoryId = view.CategoryId,
+                Description = view.Description,
+                Image = view.Image,
+                IsActive = view.IsActive,
+                ProductId = view.ProductId,
+                Price = view.Price,
+                LastPurchase = view.LastPurchase,
+                Remarks = view.Remarks,
+                Stock = view.Stock,
+            };
+        }
+
+
+        /// <summary>
+        /// Metodo que convierte el objeto Product a un ProductView
+        /// </summary>
+        /// <param name="product">Objeto Product</param>
+        /// <returns>Objeto ProductView</returns>
+        private ProductView ToView(Product product)
+        {
+            return new ProductView
+            {
+                Category = product.Category,
+                CategoryId = product.CategoryId,
+                Description = product.Description,
+                Image = product.Image,
+                IsActive = product.IsActive,
+                ProductId = product.ProductId,
+                Price = product.Price,
+                LastPurchase = product.LastPurchase,
+                Remarks = product.Remarks,
+                Stock = product.Stock,
+            };
         }
 
         protected override void Dispose(bool disposing)
