@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
-
-namespace Products
+﻿namespace Products
 {
+    using Products.Views;
+    using Xamarin.Forms;
+
     public partial class App : Application
     {
         public App()
         {
             InitializeComponent();
 
-            MainPage = new Products.MainPage();
+            //  MainPage = new Products.MainPage();
+            //  MainPage = new LoginView();
+            MainPage = new NavigationPage(new LoginView());
         }
 
         protected override void OnStart()
