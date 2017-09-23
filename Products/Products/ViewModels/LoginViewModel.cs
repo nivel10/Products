@@ -1,28 +1,32 @@
 ﻿namespace Products.ViewModels
 {
-    using System;
-    using System.ComponentModel;
-    using System.Windows.Input;
-    using GalaSoft.MvvmLight.Command;
-    using Products.Services;
+	using System;
+	using System.ComponentModel;
+	using System.Windows.Input;
+	using GalaSoft.MvvmLight.Command;
+	using Products.Services;
+    using Xamarin.Forms;
 
     public class LoginViewModel : INotifyPropertyChanged
-    {
-        #region Attributes
+	{
+		#region Attributes
 
-        private string _email;
-        private string _password;
-        private bool _isToggled;
-        private bool _isRunning;
-        private bool _isEnabled;
+		private string _email;
+		private string _password;
+		private bool _isToggled;
+		private bool _isRunning;
+		private bool _isEnabled;
 
-        #region Services
+		#region Services
 
-        private DialogService dialogService;
+		private DialogService dialogService;
+        private ApiService apiService;
 
         #endregion
 
         #endregion
+
+        #region Commands
 
         public ICommand LoginCommand
         {
@@ -32,122 +36,138 @@
             }
         }
 
-        #region Events
+		#endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		#region Events
 
-        #endregion
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        #region Properties
+		#endregion
 
-        public string Email
-        {
-            get
-            {
-                return _email;
-            }
-            set
-            {
-                if(value != _email)
-                {
-                    _email = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Email)));
-                }
-            }
-        }
+		#region Properties
 
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-            set
-            {
-                if(value != _password)
-                {
-                    _password = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
-                }
-            }
-        }
+		public string Email
+		{
+			get
+			{
+				return _email;
+			}
+			set
+			{
+				if (value != _email)
+				{
+					_email = value;
+					PropertyChanged?.Invoke(
+                        this, 
+                                            
+                        new PropertyChangedEventArgs(nameof(Email)));
+				}
+			}
+		}
 
-        public bool IsToggled
-        {
-            get
-            {
-                return _isToggled;
-            }
-            set
-            {
-                if(value != _isToggled)
-                { 
-                    _isToggled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsToggled)));
-                }
-            }
-        }
+		public string Password
+		{
+			get
+			{
+				return _password;
+			}
+			set
+			{
+				if (value != _password)
+				{
+					_password = value;
+					PropertyChanged?.Invoke(
+                        this, 
+                                            
+                        new PropertyChangedEventArgs(nameof(Password)));
+				}
+			}
+		}
 
-        public bool IsRunning
-        {
-            get
-            {
-                return _isRunning;
-            }
-            set
-            {
-                if(value != _isRunning)
-                {
-                    _isRunning = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRunning)));
-                }
-            }
-        }
+		public bool IsToggled
+		{
+			get
+			{
+				return _isToggled;
+			}
+			set
+			{
+				if (value != _isToggled)
+				{
+					_isToggled = value;
+					PropertyChanged?.Invoke(
+                        this,     
+                        new PropertyChangedEventArgs(nameof(IsToggled)));
+				}
+			}
+		}
 
-        public bool IsEnabled
-        {
-            get
-            {
-                return _isEnabled;
-            }
-            set
-            { 
-                if(value != _isEnabled)
-                {
-                    _isEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnabled)));
-                }
-            }
-        }
+		public bool IsRunning
+		{
+			get
+			{
+				return _isRunning;
+			}
+			set
+			{
+				if (value != _isRunning)
+				{
+					_isRunning = value;
+					PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsRunning)));
+				}
+			}
+		}
 
-        #endregion
+		public bool IsEnabled
+		{
+			get
+			{
+				return _isEnabled;
+			}
+			set
+			{
+				if (value != _isEnabled)
+				{
+					_isEnabled = value;
+					PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsEnabled)));
+				}
+			}
+		}
 
-        #region Constructor
+		#endregion
 
-        public LoginViewModel()
-        {
-            //  Inicializacion de datos
-            IsRunning = false;
-            IsEnabled = true;
-            IsToggled = true;
+		#region Constructor
 
-            //  Instancia de los services
-            dialogService = new DialogService();
-        }
+		public LoginViewModel()
+		{
+			//  Inicializacion de datos
+			IsRunning = false;
+			IsEnabled = true;
+			IsToggled = true;
 
-        #endregion
+			//  Instancia de los services
+			dialogService = new DialogService();
+            apiService = new ApiService();
+		}
 
-        #region Methods
+		#endregion
 
-        private async void Login()
-        {
-            if(string.IsNullOrEmpty(Email))
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "Your must enter an email...!!!");
-                return;
-            }
+		#region Methods
+
+		private async void Login()
+		{
+            //  Valida los campos del formulario
+			if (string.IsNullOrEmpty(Email))
+			{
+				await dialogService.ShowMessage(
+					"Error",
+					"Your must enter an email...!!!");
+				return;
+			}
 
 			if (string.IsNullOrEmpty(Password))
 			{
@@ -156,8 +176,77 @@
 					"Your must enter a password...!!!");
 				return;
 			}
+
+            //  Activa el ActivityIndicator
+            SetEnabledDisable(true, false);
+
+            //  Valida si el dispositivo tiene conexion 
+            var connection = await apiService.CheckConnection();
+            if(!connection.IsSuccess)
+            {
+                SetEnabledDisable(false, true);
+                await dialogService.ShowMessage("Error", connection.Message);
+                return;
+            }
+
+            //  Valida si se puede optenet el Token
+            var tokenResponse = await apiService.GetToken(
+                "http://productszuluapi.azurewebsites.net", 
+                Email, 
+                Password);
+            if(tokenResponse == null)
+            { 
+                SetEnabledDisable(false, true);
+                Password = null;
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "The service not available, plase try latter...!!!");
+                return;
+            }
+
+			if (string.IsNullOrEmpty(tokenResponse.AccessToken))
+			{
+				SetEnabledDisable(false, true);
+				Password = null;
+				await dialogService.ShowMessage(
+                    "Error", 
+                    tokenResponse.ErrorDescription);
+				return;
+			}
+
+            //  Valida si hubo o no error en los metodos anterior
+            SetEnabledDisable(false, true);
+            Email = null;
+            Password = null;
+
+            //  Invoca el metodo aue hace la instancia de la MainViewModel
+            //  Crea una instancia del Categories y la vincula con la MainViewModel
+            var mainViewModel = new MainViewModel();
+
+            //  Asigna a la propiedad Token del MainViewModel el objeto tokenResponse
+            mainViewModel.Token = tokenResponse;
+
+            //  Crea una instancia de la clase Categories y la vincula con la MainViewModel
+            mainViewModel.Categories = new CategoriesViewModel();
+
+			//  Invoca el formulario Categories
+			//  PushAsync = Apilar
+			//  PopAsync = Desapilar
+			await Application.Current.MainPage.Navigation.PushAsync(
+                new NavigationPage(new Views.CategoriesView()));
+		}
+
+		/// <summary>
+		/// Metodo qua habilita o deshabilita los controles del formulario
+		/// </summary>
+		/// <param name="isRunning">Bool que indica si el ActivityIndicator esta activo o no</param>
+		/// <param name="isEnabled">Bool que indica si los controles estan activo o no</param>
+		private void SetEnabledDisable(bool isRunning, bool isEnabled)
+        {
+            IsRunning = isRunning;
+            IsEnabled = isEnabled;
         }
 
 		#endregion
-    }
+	}
 }

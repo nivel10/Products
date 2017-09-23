@@ -2,9 +2,9 @@
 {
     using Xamarin.Forms;
 
-    public partial class LoginView : ContentPage
+    public partial class CategoriesView : ContentPage
     {
-        public LoginView()
+        public CategoriesView()
         {
             InitializeComponent();
         }
