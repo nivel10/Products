@@ -29,7 +29,7 @@
 
         private void LoadCategories()
         {
-            throw new NotImplementedException();
+            //  throw new NotImplementedException();
         }
 
 		#endregion
