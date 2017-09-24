@@ -1,7 +1,7 @@
-﻿using Products.Models;
-
-namespace Products.ViewModels
+﻿namespace Products.ViewModels
 {
+    using Products.Models;
+
     public class MainViewModel
     {
         #region Atributtes

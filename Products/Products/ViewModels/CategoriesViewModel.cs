@@ -9,7 +9,6 @@
 
     public class CategoriesViewModel : INotifyPropertyChanged
     {
-
         #region Attributes
 
         private ApiService apiService;

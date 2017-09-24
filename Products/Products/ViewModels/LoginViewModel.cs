@@ -1,11 +1,11 @@
 ﻿namespace Products.ViewModels
 {
-	using System;
-	using System.ComponentModel;
-	using System.Windows.Input;
-	using GalaSoft.MvvmLight.Command;
-	using Products.Services;
+    using System.ComponentModel;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
+    using Products.Services;
     using Xamarin.Forms;
+    using Products.Views;
 
     public class LoginViewModel : INotifyPropertyChanged
 	{
@@ -223,7 +223,7 @@
 
             //  Invoca el metodo aue hace la instancia de la MainViewModel
             //  Crea una instancia del Categories y la vincula con la MainViewModel
-            var mainViewModel = new MainViewModel();
+            var mainViewModel = MainViewModel.GetInstance();
 
             //  Asigna a la propiedad Token del MainViewModel el objeto tokenResponse
             mainViewModel.Token = tokenResponse;
@@ -231,12 +231,11 @@
             //  Crea una instancia de la clase Categories y la vincula con la MainViewModel
             mainViewModel.Categories = new CategoriesViewModel();
 
-			//  Invoca el formulario Categories
-			//  PushAsync = Apilar
-			//  PopAsync = Desapilar
-			await Application.Current.MainPage.Navigation.PushAsync(
-                new NavigationPage(new Views.CategoriesView()));
-		}
+            //  Invoca el formulario Categories
+            //  PushAsync = Apilar
+            //  PopAsync = Desapilar
+            await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
+        }
 
 		/// <summary>
 		/// Metodo qua habilita o deshabilita los controles del formulario

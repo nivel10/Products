@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Products.Models
+﻿namespace Products.Models
 {
+    using System.Collections.Generic;
+
     public class Category
     {
 		public int CategoryId { get; set; }
