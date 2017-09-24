@@ -16,8 +16,8 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Label Grid.Column="0"
@@ -26,7 +26,12 @@
                                        Text="{Binding Description}"/>
 
                                 <Image HorizontalOptions="End" 
-                                       Source="ic_chevron_right"/>
+                                       Source="ic_chevron_right">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

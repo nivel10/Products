@@ -1,18 +1,41 @@
 ﻿namespace Products.Models
 {
+    using System;
     using System.Collections.Generic;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
 
     public class Category
     {
-		public int CategoryId { get; set; }
+        #region Commands
 
-		public string Description { get; set; }
+        public ICommand SelectCategoryCommand
+        {
+            get
+            {
+                return new RelayCommand(SelectCategory);
+            }
+        }
+
+        #endregion
+
+        #region Properties
+
+        public int CategoryId { get; set; }
+
+        public string Description { get; set; }
 
         public List<Product> Products { get; set; }
 
-        public override string ToString()
+        #endregion
+
+        #region Methods
+
+        private void SelectCategory()
         {
-            return Description;
+            throw new NotImplementedException();
         }
+
+		#endregion
     }
 }
