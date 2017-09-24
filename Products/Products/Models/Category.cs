@@ -39,7 +39,7 @@
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Products = new ProductsViewModel(Products);
 
-			//  Genera la vanegacion de la pagina 
+			//  Genera la navegacion de la pagina 
             //  PushAsync() = Apilar Paginas
 			//  PopAsync() = Desapila paginas
 			Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
