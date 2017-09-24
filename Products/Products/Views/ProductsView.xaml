@@ -16,13 +16,15 @@
                         <ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Grid.Column="0" 
+                                <Image Grid.Column="0"
+                                       HeightRequest="80"
                                        HorizontalOptions="Start" 
-                                       Source="{Binding Image}"/>
+                                       Source="{Binding ImageFullPath}"
+                                       WidthRequest="100"/>
                                 
                                 <Label Grid.Column="1"
                                        HorizontalOptions="FillAndExpand"

@@ -1,9 +1,11 @@
 ﻿namespace Products.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
+    using Products.ViewModels;
+    using Products.Views;
+    using Xamarin.Forms;
 
     public class Category
     {
@@ -33,7 +35,14 @@
 
         private void SelectCategory()
         {
-            throw new NotImplementedException();
+            //  Genera una instancia del Products() en la MainViewModel
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Products = new ProductsViewModel(Products);
+
+			//  Genera la vanegacion de la pagina 
+            //  PushAsync() = Apilar Paginas
+			//  PopAsync() = Desapila paginas
+			Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
         }
 
 		#endregion

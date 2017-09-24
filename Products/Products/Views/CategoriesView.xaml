@@ -23,7 +23,11 @@
                                 <Label Grid.Column="0"
                                        HorizontalOptions="FillAndExpand"
                                        VerticalOptions="Center"
-                                       Text="{Binding Description}"/>
+                                       Text="{Binding Description}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
 
                                 <Image HorizontalOptions="End" 
                                        Source="ic_chevron_right">
