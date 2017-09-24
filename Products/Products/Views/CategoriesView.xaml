@@ -8,8 +8,10 @@
         
         <StackLayout BindingContext="{Binding Categories}"
                      Padding="5">
+            <ListView ItemsSource="{Binding CategoriesList}">
+                
+            </ListView>
         </StackLayout>
-
         
 	</ContentPage.Content>
 </ContentPage>

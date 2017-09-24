@@ -58,8 +58,7 @@
 				{
 					_email = value;
 					PropertyChanged?.Invoke(
-                        this, 
-                                            
+                        this,
                         new PropertyChangedEventArgs(nameof(Email)));
 				}
 			}
@@ -77,8 +76,7 @@
 				{
 					_password = value;
 					PropertyChanged?.Invoke(
-                        this, 
-                                            
+                        this,         
                         new PropertyChangedEventArgs(nameof(Password)));
 				}
 			}
@@ -94,9 +92,9 @@
 			{
 				if (value != _isToggled)
 				{
-					_isToggled = value;
+                    _isToggled = value;
 					PropertyChanged?.Invoke(
-                        this,     
+                        this,
                         new PropertyChangedEventArgs(nameof(IsToggled)));
 				}
 			}
@@ -144,6 +142,10 @@
 
 		public LoginViewModel()
 		{
+            //  Eliminar
+            Email = "jzuluaga55@gmail.com";
+            Password = "123456";
+
 			//  Inicializacion de datos
 			IsRunning = false;
 			IsEnabled = true;

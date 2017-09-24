@@ -1,7 +1,6 @@
 ﻿namespace Products.Infrastructure
 {
-	using System;
-	using Products.ViewModels;
+    using Products.ViewModels;
 
     public class InstanceLocator
     {

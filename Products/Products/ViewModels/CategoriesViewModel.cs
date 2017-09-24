@@ -1,9 +1,9 @@
 ﻿namespace Products.ViewModels
 {
-	using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Linq;
     using Products.Models;
     using Products.Services;
 
@@ -14,7 +14,7 @@
 
         private ApiService apiService;
         private DialogService dialogService;
-        private ObservableCollection<Category> _categories;
+        private ObservableCollection<Category> _categoriesList;
 
         #region Events
 
@@ -26,20 +26,20 @@
 
         #region Properties
 
-        public ObservableCollection<Category> Categories
+        public ObservableCollection<Category> CategoriesList
         {
             get
             {
-                return _categories;
+                return _categoriesList;
             }
 			set
             { 
-                if(value != _categories) 
-            {
-                _categories = value;
-                PropertyChanged?.Invoke(
-                    this, 
-                    new PropertyChangedEventArgs(nameof(Categories)));
+                if(value != _categoriesList) 
+                {
+                    _categoriesList = value;
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(CategoriesList)));
                 }
 			}
 		}
@@ -92,6 +92,10 @@
 
             //  Castea el objeto en response como un List<Category>
             var categories = (List<Category>)response.Result;
+
+            //  Carga y ordena los datos en el ObservableCollection
+            CategoriesList = new ObservableCollection<Category>(
+                categories.OrderBy(c => c.Description));
 		}
 
 		#endregion
