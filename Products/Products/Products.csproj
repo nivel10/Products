@@ -59,6 +59,7 @@
       <DependentUpon>ProductsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ProductsViewModel.cs" />
+    <Compile Include="Services\NavigationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">

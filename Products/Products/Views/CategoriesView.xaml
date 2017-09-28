@@ -4,8 +4,15 @@
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Categories"
              x:Class="Products.Views.CategoriesView">
+    
+    <!-- ToolbarItems -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add_circle.png"
+                     Command="{Binding NewCategoryCommand}"/>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
-
+        
         <StackLayout BindingContext="{Binding Categories}"
                      Padding="5">
             <ListView HasUnevenRows="True"

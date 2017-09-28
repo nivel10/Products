@@ -3,12 +3,19 @@
     using System.Collections.Generic;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
+    using Products.Services;
     using Products.ViewModels;
     using Products.Views;
     using Xamarin.Forms;
 
     public class Category
     {
+        #region Attributes
+
+        private NavigationService navigationService;
+
+        #endregion
+
         #region Commands
 
         public ICommand SelectCategoryCommand
@@ -17,6 +24,15 @@
             {
                 return new RelayCommand(SelectCategory);
             }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public Category()
+        {
+            navigationService = new NavigationService();
         }
 
         #endregion
@@ -33,7 +49,7 @@
 
         #region Methods
 
-        private void SelectCategory()
+        private async void SelectCategory()
         {
             //  Genera una instancia del Products() en la MainViewModel
             var mainViewModel = MainViewModel.GetInstance();
@@ -42,7 +58,8 @@
 			//  Genera la navegacion de la pagina 
             //  PushAsync() = Apilar Paginas
 			//  PopAsync() = Desapila paginas
-			Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
+			//  Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
+            await navigationService.Navigate("ProductsView");
         }
 
 		#endregion

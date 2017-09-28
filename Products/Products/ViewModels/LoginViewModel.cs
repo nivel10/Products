@@ -4,8 +4,6 @@
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Services;
-    using Xamarin.Forms;
-    using Products.Views;
 
     public class LoginViewModel : INotifyPropertyChanged
 	{
@@ -21,6 +19,7 @@
 
 		private DialogService dialogService;
         private ApiService apiService;
+        private NavigationService navigationService;
 
         #endregion
 
@@ -154,6 +153,7 @@
 			//  Instancia de los services
 			dialogService = new DialogService();
             apiService = new ApiService();
+            navigationService = new NavigationService();
 		}
 
 		#endregion
@@ -234,7 +234,8 @@
             //  Invoca el formulario Categories
             //  PushAsync = Apilar
             //  PopAsync = Desapilar
-            await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
+            //  await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
+            await navigationService.Navigate("CategoriesView");
         }
 
 		/// <summary>
