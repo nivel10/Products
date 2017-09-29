@@ -1,5 +1,6 @@
 ﻿namespace Products.Services
 {
+    using System;
     using System.Threading.Tasks;
     using Products.Views;
     using Xamarin.Forms;
@@ -31,6 +32,15 @@
                     break;
             
             };
+        }
+
+        /// <summary>
+        /// Metodo que hace desapilar la navegacion
+        /// </summary>
+        /// <returns>Retorna la navegacion</returns>
+        public async Task Back()
+        {
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

@@ -24,7 +24,7 @@
                 <Entry Grid.Column="1"
                        Grid.Row="0"
                        HorizontalOptions="FillAndExpand"
-                       Placeholder="Entry category description...!!!"
+                       Placeholder="Enter category description...!!!"
                        Text="{Binding Description, Mode=TwoWay}"
                        VerticalOptions="Center"/>
             </Grid>
