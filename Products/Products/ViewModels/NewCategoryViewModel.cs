@@ -1,6 +1,5 @@
 ﻿namespace Products.ViewModels
 {
-    using System;
     using System.ComponentModel;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
@@ -162,10 +161,19 @@
                 return;
             }
 
+            //  Se crea una categoria a partir del objeto response para 
+            //  Actuzizar el objeto categoria (CategoryVieModel)
+            category = (Category)response.Result;
+
+            //  Invoca una instancia del Category
+            var categoryVieModel = CategoriesViewModel.GetInstance();
+            //  Invoca el metodo que actualiza el objeto de categoria
+            categoryVieModel.AddCategory(category);
+
             //  Habilita el ActivityIndicator
             SetEnabledDisable(false, true);
 
-            await dialogService.ShowMessage("Information", "Category create");
+            await dialogService.ShowMessage("Information", "Category create...!!!");
 
             //  Retorna a la pagina anterior
             await navigationService.Back();
