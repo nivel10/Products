@@ -6,5 +6,129 @@
              Title="New Product">
     
 	<ContentPage.Content>
+        
+        <StackLayout Padding="10">
+
+            <!--Grid-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"
+                       Grid.Row="0"
+                       HorizontalOptions="StartAndExpand"
+                       Text="Description:"
+                       VerticalOptions="Center" />
+                
+                <Entry Grid.Column="1"
+                       Grid.Row="0"
+                       HorizontalOptions="FillAndExpand"
+                       Placeholder="Enter description...!!! "
+                       Text="{Binding Description, Mode=TwoWay}"
+                       VerticalOptions="Center"/>
+
+                <Label Grid.Column="0"
+                       Grid.Row="1"
+                       HorizontalOptions="Start"
+                       Text="Image:"
+                       VerticalOptions="Center"/>
+                
+                <!--<Image Grid.Column="1"
+                       Grid.Row="1"
+                       HeightRequest="60"
+                       Source=""
+                       WidthRequest="50"/>-->
+                
+                <Label Grid.Column="0"
+                       Grid.Row="2"
+                       HorizontalOptions="Start"
+                       Text="Price:"
+                       VerticalOptions="Center"/>
+
+                <Entry Grid.Column="1"
+                       Grid.Row="2"
+                       HorizontalOptions="FillAndExpand"
+                       Keyboard="Numeric"
+                       Placeholder="Enter price...!!!"
+                       Text="{Binding Price, Mode=TwoWay}"/>
+                
+                <Label Grid.Column="0"
+                       Grid.Row="3"
+                       HorizontalOptions="Start"
+                       Text="Is Active?:"
+                       VerticalOptions="Center"/>
+                
+                <Switch Grid.Column="1"
+                        Grid.Row="3"
+                        HorizontalOptions="Start"
+                        IsToggled="{Binding IsToggled, Mode=TwoWay}"
+                        VerticalOptions="Center"/>
+
+                <Label Grid.Column="0"
+                       Grid.Row="4"
+                       HorizontalOptions="Start"
+                       Text="Last purchase:"
+                       VerticalOptions="Center"/>
+
+                <!--<Entry Grid.Column="1" 
+                       Grid.Row="4" 
+                       HorizontalOptions="FillAndExpand"
+                       Placeholder="Enter last purchase...!!!"
+                       Text="{Binding LastPurchase}"
+                       VerticalOptions="Center"/>-->
+                
+                <DatePicker Format="dd/MM/yyyy"
+                            Grid.Column="1" 
+                            Grid.Row="4" 
+                            HorizontalOptions="FillAndExpand"
+                            Date="{Binding LastPurchase}"
+                            VerticalOptions="Center"/>
+                
+                <Label Grid.Column="0"
+                       Grid.Row="5"
+                       HorizontalOptions="Start"
+                       Text="Stock:"
+                       VerticalOptions="Center"/>
+
+                <Entry Grid.Column="1"
+                       Grid.Row="5"
+                       HorizontalOptions="FillAndExpand"
+                       Keyboard="Numeric"
+                       Placeholder="Enter stock...!!!"
+                       Text="{Binding Stock}"
+                       VerticalOptions="Center"/>
+
+                <Label Grid.Column="0" 
+                       Grid.Row="6"
+                       HorizontalOptions="Start"
+                       Text="Remarks:"
+                       VerticalOptions="Center"/>
+
+                <Entry Grid.Column="1"
+                       Grid.Row="6"
+                       Grid.RowSpan="2"
+                       HorizontalOptions="FillAndExpand"
+                       Placeholder="Enter remarks...!!!"/>
+
+            </Grid>
+
+            <!-- Activity Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsRunnig}"
+                               VerticalOptions="CenterAndExpand"/>
+
+            <!-- Button -->
+            <Button BackgroundColor="Navy"
+                    BorderRadius="23"
+                    Command="{Binding SaveProductCommand}"
+                    HeightRequest="46"
+                    Margin="56,0"
+                    Text="Save"
+                    TextColor="White"
+                    VerticalOptions="EndAndExpand"/>
+            
+        </StackLayout>
+
 	</ContentPage.Content>
 </ContentPage>
