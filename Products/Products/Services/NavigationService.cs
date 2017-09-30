@@ -30,7 +30,11 @@
                     await Application.Current.MainPage.Navigation.PushAsync(
                         new NewCategoryView());
                     break;
-            
+
+                case "NewProductView":
+                    await Application.Current.MainPage.Navigation.PushAsync(
+                        new NewProductView());
+                    break;
             };
         }
 

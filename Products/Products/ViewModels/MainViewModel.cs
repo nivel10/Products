@@ -1,5 +1,6 @@
 ﻿namespace Products.ViewModels
 {
+    using System;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Models;
@@ -46,6 +47,12 @@
             set;
         }
 
+        public NewProductViewModel NewProduct
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Commands
@@ -53,6 +60,11 @@
         public ICommand NewCategoryCommand
         {
             get { return new RelayCommand(GoNewCategory); }
+        }
+
+        public ICommand NewProductCommand
+        {
+            get { return new RelayCommand(GoNewProduct); }
         }
 
         #endregion
@@ -99,6 +111,12 @@
 
             //  Invoca el servicio de navegacion
             await navigationService.Navigate("NewCategoryView");
+		}
+
+		private async void GoNewProduct()
+		{
+            //  Invoca el servicio de nqvegacion
+            await navigationService.Navigate("NewProductView");
 		}
 
         #endregion
