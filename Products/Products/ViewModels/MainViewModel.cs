@@ -115,6 +115,9 @@
 
 		private async void GoNewProduct()
 		{
+            //  Se invoca una instancia del NewProduct
+            NewProduct = new NewProductViewModel();
+                
             //  Invoca el servicio de nqvegacion
             await navigationService.Navigate("NewProductView");
 		}

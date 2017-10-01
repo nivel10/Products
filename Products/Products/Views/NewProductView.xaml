@@ -7,7 +7,8 @@
     
 	<ContentPage.Content>
         
-        <StackLayout Padding="10">
+        <StackLayout BindingContext="{Binding NewProduct}"
+                     Padding="10">
 
             <!--Grid-->
             <Grid>
@@ -110,12 +111,12 @@
                        Grid.Row="6"
                        Grid.RowSpan="2"
                        HorizontalOptions="FillAndExpand"
-                       Placeholder="Enter remarks...!!!"/>
-
+                       Placeholder="Enter remarks...!!!"
+                       Text="{Binding Remarks}"/>
             </Grid>
 
             <!-- Activity Indicator -->
-            <ActivityIndicator IsRunning="{Binding IsRunnig}"
+            <ActivityIndicator IsRunning="{Binding IsRunning, Mode=TwoWay}"
                                VerticalOptions="CenterAndExpand"/>
 
             <!-- Button -->
@@ -123,6 +124,7 @@
                     BorderRadius="23"
                     Command="{Binding SaveProductCommand}"
                     HeightRequest="46"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                     Margin="56,0"
                     Text="Save"
                     TextColor="White"
