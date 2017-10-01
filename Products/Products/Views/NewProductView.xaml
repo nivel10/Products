@@ -98,7 +98,7 @@
                        HorizontalOptions="FillAndExpand"
                        Keyboard="Numeric"
                        Placeholder="Enter stock...!!!"
-                       Text="{Binding Stock}"
+                       Text="{Binding Stock, Mode=TwoWay}"
                        VerticalOptions="Center"/>
 
                 <Label Grid.Column="0" 
