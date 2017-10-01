@@ -9,7 +9,6 @@
 
     public class NewProductViewModel : INotifyPropertyChanged
     {
-
         #region Attributes
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -291,7 +290,9 @@
             }
 
             //  Mensaje de sistema
-            await dialogService.ShowMessage("Information", "Product add successful...!!!");
+            await dialogService.ShowMessage(
+                "Information", 
+                "Product add successful...!!!");
 
             //  Hace el Back del NavigationService
             await navigationService.Back();
