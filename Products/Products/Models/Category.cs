@@ -1,5 +1,6 @@
 ﻿namespace Products.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
@@ -23,6 +24,14 @@
             get
             {
                 return new RelayCommand(SelectCategory);
+            }
+        }
+
+        public ICommand EditCommand
+        {
+            get
+            {
+                return new RelayCommand(Edit);
             }
         }
 
@@ -62,6 +71,10 @@
             await navigationService.Navigate("ProductsView");
         }
 
-		#endregion
+        private async void Edit()
+        {
+        }
+
+        #endregion
     }
 }

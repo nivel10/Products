@@ -6,6 +6,8 @@
     using System.Linq;
     using Products.Models;
     using Products.Services;
+    using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
 
     public class CategoriesViewModel : INotifyPropertyChanged
     {
@@ -16,12 +18,25 @@
         private ObservableCollection<Category> _categoriesList;
 		private static CategoriesViewModel _instance;
         private List<Category> categories;
+        private bool _isRefreshing;
 
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+
+        #endregion
+
+        #region Commands
+
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new RelayCommand(LoadCategories);
+            }
+        } 
 
         #endregion
 
@@ -44,6 +59,22 @@
                 }
 			}
 		}
+
+        public bool IsRefreshing
+        {
+            get
+            {
+                return _isRefreshing;
+            }
+            set
+            {
+                if (value != _isRefreshing)
+                {
+                    _isRefreshing = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRefreshing)));
+                }
+            }
+        }
 
         #endregion
 
@@ -68,6 +99,9 @@
 
         private async void LoadCategories()
         {
+            //  ActivityIndicator del View
+            IsRefreshing = true;
+
             //  Verifica si hay conexion a internet
             var connection = await apiService.CheckConnection();
             if(!connection.IsSuccess)
@@ -90,6 +124,7 @@
             //  Valida si hubo o no error en el metodo anterior
             if(!response.IsSuccess)
             {
+                IsRefreshing = false;
                 await dialogService.ShowMessage("Error", response.Message);
                 return;
             }
@@ -100,6 +135,9 @@
             //  Carga y ordena los datos en el ObservableCollection
             CategoriesList = new ObservableCollection<Category>(
                 categories.OrderBy(c => c.Description));
+
+            //  ActivityIndicator del View
+            IsRefreshing = false;
 		}
        
         /// <summary>
