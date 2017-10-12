@@ -10,6 +10,7 @@
     using Products.Domain;
     using System.Collections.Generic;
     using Products.API.Models;
+    using System;
 
     //  El Autorize obliga al usuario que este logueado para poder acceder al mismo \\
     //  [Authorize(Roles ="Admin")]
@@ -118,7 +119,23 @@
             }
 
             db.Categories.Add(category);
-            await db.SaveChangesAsync();
+
+            //  Se hace esta validacion para que el App Movil nos muestre el error
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                //  Valida los InnerException por duplicidad de descripcion
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("Index"))
+
+                    return BadRequest("There are a record with the same description...!!!");
+                else
+                    return BadRequest(ex.Message.Trim());
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
         }
