@@ -8,6 +8,7 @@
     using Products.Services;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
+    using System.Threading.Tasks;
 
     public class CategoriesViewModel : INotifyPropertyChanged
     {
@@ -16,7 +17,7 @@
         private ApiService apiService;
         private DialogService dialogService;
         private ObservableCollection<Category> _categoriesList;
-		private static CategoriesViewModel _instance;
+        private static CategoriesViewModel _instance;
         private List<Category> categories;
         private bool _isRefreshing;
 
@@ -36,7 +37,7 @@
             {
                 return new RelayCommand(LoadCategories);
             }
-        } 
+        }
 
         #endregion
 
@@ -48,17 +49,17 @@
             {
                 return _categoriesList;
             }
-			set
-            { 
-                if(value != _categoriesList) 
+            set
+            {
+                if (value != _categoriesList)
                 {
                     _categoriesList = value;
                     PropertyChanged?.Invoke(
-                        this, 
+                        this,
                         new PropertyChangedEventArgs(nameof(CategoriesList)));
                 }
-			}
-		}
+            }
+        }
 
         public bool IsRefreshing
         {
@@ -104,7 +105,7 @@
 
             //  Verifica si hay conexion a internet
             var connection = await apiService.CheckConnection();
-            if(!connection.IsSuccess)
+            if (!connection.IsSuccess)
             {
                 await dialogService.ShowMessage("Error", connection.Message);
                 return;
@@ -116,13 +117,13 @@
             //  Optine una lista de categorias List<Category>
             var response = await apiService.GetList<Category>(
                 "http://productszuluapi.azurewebsites.net",
-                "/api", 
-                "/Categories", 
+                "/api",
+                "/Categories",
                 mainViewModel.Token.TokenType,
                 mainViewModel.Token.AccessToken);
 
             //  Valida si hubo o no error en el metodo anterior
-            if(!response.IsSuccess)
+            if (!response.IsSuccess)
             {
                 IsRefreshing = false;
                 await dialogService.ShowMessage("Error", response.Message);
@@ -138,15 +139,15 @@
 
             //  ActivityIndicator del View
             IsRefreshing = false;
-		}
-       
+        }
+
         /// <summary>
         /// Metodo que retorna una instancia del CategoryViewModel
         /// </summary>
         /// <returns>Objeto de instancia</returns>
         public static CategoriesViewModel GetInstance()
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 return new CategoriesViewModel();
             }
@@ -161,9 +162,9 @@
             //  Agrega el objeto al List<> pero no en orden
             categories.Add(category);
 
-			//  Carga y ordena los datos en el ObservableCollection
-			CategoriesList = new ObservableCollection<Category>(
-				categories.OrderBy(c => c.Description));
+            //  Carga y ordena los datos en el ObservableCollection
+            CategoriesList = new ObservableCollection<Category>(
+                categories.OrderBy(c => c.Description));
 
             //  ActivityIndicator del View
             IsRefreshing = false;
@@ -186,6 +187,55 @@
 
             //  ActivityIndicator del View
             IsRefreshing = false;
+        }
+
+        public async Task DeleteCategory(Category category)
+        {
+            //  ActivityIndicator del View
+            IsRefreshing = true;
+
+            //  Valida que haya conexion a internet
+            var connection = await apiService.CheckConnection();
+            if (!connection.IsSuccess)
+            {
+                IsRefreshing = false;
+                await dialogService.ShowMessage("Error", connection.Message);
+                return;
+            }
+
+            //  Invoca una instancia del Sigleton
+            var mainViewModel = MainViewModel.GetInstance();
+
+            //  Invoca el metodo aue hqce el insert de datos (Put)
+            //  Put = Verbo que hace referencia modificar
+            var response = await apiService.Delete(
+                "http://productszuluapi.azurewebsites.net",
+                "/api",
+                "/Categories",
+                mainViewModel.Token.TokenType,
+                mainViewModel.Token.AccessToken,
+                category);
+
+            //  Valida si hubo o no error en el metodo anterior
+            if (!response.IsSuccess)
+            {
+                //  ActivityIndicator del View
+                IsRefreshing = false;
+                await dialogService.ShowMessage("Error", response.Message);
+                return;
+            }
+
+            //  Elimiina de la lista el objeto categoria
+            categories.Remove(category);
+
+            //  Carga y ordena los datos en el ObservableCollection
+            CategoriesList = new ObservableCollection<Category>(
+                categories.OrderBy(c => c.Description));
+
+            //  ActivityIndicator del View
+            IsRefreshing = false;
+
+            await dialogService.ShowMessage("Information", "Category is deleted...!!!");
         }
 
         #endregion

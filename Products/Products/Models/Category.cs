@@ -11,6 +11,7 @@
         #region Attributes
 
         private NavigationService navigationService;
+        private DialogService dialogService;
 
         #endregion
 
@@ -32,13 +33,20 @@
             }
         }
 
+        public ICommand DeleteCommand
+        {
+            get{ return new RelayCommand(Delete); }
+        }
+
         #endregion
 
         #region Constructor
 
         public Category()
         {
+            //  Genera la instancia de los services
             navigationService = new NavigationService();
+            dialogService = new DialogService();
         }
 
         #endregion
@@ -68,6 +76,9 @@
             await navigationService.Navigate("ProductsView");
         }
 
+        /// <summary>
+        /// Metodo que edita los datos de las Category
+        /// </summary>
         private async void Edit()
         {
             //  Genera una instancia del Products() en la MainViewModel
@@ -81,10 +92,33 @@
             await navigationService.Navigate("EditCategoryView");
         }
 
+        /// <summary>
+        /// Metodo que elimina un registro de los Category
+        /// </summary>
+        private async void Delete()
+        {
+            var response = await dialogService.ShowConfirm(
+                "Confirm", 
+                "Are you sure to deleted record...?");
+            if (response)
+            {
+                //  Se borra en el CategoryViewModel porque esta clase no tiene
+                //  Implementado el INptifyPropertyChanged
+                //  Se optiene una instancia del CategoryViewModel
+                var categoryViewModel = CategoriesViewModel.GetInstance();
+                await categoryViewModel.DeleteCategory(this);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         public override int GetHashCode()
         {
             return CategoryId;
         }
+
         #endregion
     }
 }

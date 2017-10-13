@@ -10,5 +10,14 @@
             await Application.Current.MainPage.DisplayAlert(
                 title, message, "Accept");
         }
+
+        public async Task<bool> ShowConfirm(string title, string message)
+        {
+           return await Application.Current.MainPage.DisplayAlert(
+                title, 
+                message,
+                "Yes",
+                "No");
+        }
     }
 }
