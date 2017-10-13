@@ -155,14 +155,39 @@
 
         public void AddCategory(Category category)
         {
+            //  ActivityIndicator del View
+            IsRefreshing = true;
+
             //  Agrega el objeto al List<> pero no en orden
             categories.Add(category);
 
 			//  Carga y ordena los datos en el ObservableCollection
 			CategoriesList = new ObservableCollection<Category>(
 				categories.OrderBy(c => c.Description));
+
+            //  ActivityIndicator del View
+            IsRefreshing = false;
         }
 
-		#endregion
+        public void UpdateCategory(Category category)
+        {
+            //  ActivityIndicator del View
+            IsRefreshing = true;
+
+            //  Busca dentro del objeto List<Category> el registro a modificar
+            var oldCategory = categories
+                .Where(c => c.CategoryId == category.CategoryId)
+                .FirstOrDefault();
+            oldCategory = category;
+
+            //  Carga y ordena los datos en el ObservableCollection
+            CategoriesList = new ObservableCollection<Category>(
+                categories.OrderBy(c => c.Description));
+
+            //  ActivityIndicator del View
+            IsRefreshing = false;
+        }
+
+        #endregion
     }
 }

@@ -1,13 +1,10 @@
 ﻿namespace Products.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Services;
     using Products.ViewModels;
-    using Products.Views;
-    using Xamarin.Forms;
 
     public class Category
     {
@@ -73,8 +70,21 @@
 
         private async void Edit()
         {
+            //  Genera una instancia del Products() en la MainViewModel
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.EditCategory = new EditCategoryViewModel(this);
+
+            //  Genera la navegacion de la pagina 
+            //  PushAsync() = Apilar Paginas
+            //  PopAsync() = Desapila paginas
+            //  Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
+            await navigationService.Navigate("EditCategoryView");
         }
 
+        public override int GetHashCode()
+        {
+            return CategoryId;
+        }
         #endregion
     }
 }

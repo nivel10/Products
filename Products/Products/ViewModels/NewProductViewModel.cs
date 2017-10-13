@@ -36,6 +36,14 @@
             }
         }
 
+        public ICommand BackCommand
+        {
+            get
+            {
+                return new RelayCommand(Back);
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -183,6 +191,7 @@
             //  Instancia los servicios
             dialogService = new DialogService();
             apiService = new ApiService();
+            navigationService = new NavigationService();
         }
 
         #endregion
@@ -307,6 +316,11 @@
         {
             IsRunning = isRunning;
             IsEnabled = isEnabled;
+        }
+
+        private async void Back()
+        {
+            await navigationService.Back();
         }
 
         #endregion

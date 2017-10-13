@@ -134,8 +134,72 @@
 			}
         }
 
-		public async Task<Response> Post<T>(string urlBase,
-			string urlPrefix,
+        public async Task<Response> Put<T>(
+            string urlBase,
+            string urlPrefix,
+            string urlController,
+            string tokenType,
+            string accessToken,
+            T model)
+        {
+            try
+            {
+                //  Deserealiza el objeto
+                var request = JsonConvert.SerializeObject(model);
+                //  Crea el StringContent
+                var content = new StringContent(
+                    request, 
+                    Encoding.UTF8, 
+                    "application/json");
+                //  Crea el objeto HttpClient
+                var client = new HttpClient();
+                //  Define la autenticacion del Token
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue(tokenType, accessToken);
+                //  Le asigna al objeto client la UrlBase
+                client.BaseAddress = new Uri(urlBase);
+                //  Concatena en una variable la Url del Prfix, la Url del Controller y el Id del objeto
+                var urlApi = string.Format(
+                    "{0}{1}/{2}", 
+                    urlPrefix, 
+                    urlController, 
+                    model.GetHashCode());
+                //  Consume el servicio del Post en el WebAPI
+                var response = await client.PostAsync(urlApi, content);
+                //  Lee la respuesta optenida
+                var result = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    //  Optiene el el error del objeto serializado
+                    var error = JsonConvert.DeserializeObject<Response>(result);
+                    error.IsSuccess = false;
+                    return error;
+                }
+
+                //  Deserealiza la respuesta y la devuelve en el objeto Respponse
+                var newRecord = JsonConvert.DeserializeObject<T>(result);
+
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = "Record is update ok...!!!",
+                    Result = newRecord,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message.Trim(),
+                };
+            }
+        }
+
+        public async Task<Response> Post<T>(
+            string urlBase,
+            string urlPrefix,
 			string urlController,
 			string tokenType,
 			string accessToken,
@@ -183,7 +247,7 @@
             {
                 return new Response 
                 {
-                    IsSuccess = true,
+                    IsSuccess = false,
                     Message = ex.Message.Trim(),
                 };
             }

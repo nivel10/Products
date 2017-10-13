@@ -1,6 +1,5 @@
 ﻿namespace Products.ViewModels
 {
-    using System;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Models;
@@ -48,6 +47,12 @@
         }
 
         public NewProductViewModel NewProduct
+        {
+            get;
+            set;
+        }
+
+        public EditCategoryViewModel EditCategory
         {
             get;
             set;

@@ -119,17 +119,32 @@
             <ActivityIndicator IsRunning="{Binding IsRunning, Mode=TwoWay}"
                                VerticalOptions="CenterAndExpand"/>
 
-            <!-- Button -->
-            <Button BackgroundColor="Navy"
-                    BorderRadius="23"
-                    Command="{Binding SaveProductCommand}"
-                    HeightRequest="46"
-                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                    Margin="56,0"
-                    Text="Save"
-                    TextColor="White"
-                    VerticalOptions="EndAndExpand"/>
-            
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center">
+
+                <!-- Button -->
+                <Button BackgroundColor="Navy"
+                        BorderRadius="23"
+                        Command="{Binding SaveProductCommand}"
+                        HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        Margin="10,0"
+                        Text="Save"
+                        TextColor="White"
+                        VerticalOptions="EndAndExpand"/>
+
+                <!-- Button -->
+                <Button BackgroundColor="Green"
+                        BorderRadius="23"
+                        Command="{Binding BackCommand}"
+                        HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        Margin="10,0"
+                        Text="Back"
+                        TextColor="White"
+                        VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+
         </StackLayout>
 
 	</ContentPage.Content>

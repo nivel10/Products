@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="Products.Views.NewCategoryView"
+             x:Class="Products.Views.EditCategoryView"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="New Category">
-    
-	<ContentPage.Content>
-        <StackLayout BindingContext="{Binding NewCategory}"
+             Title="Edit Category">
+
+    <ContentPage.Content>
+        <StackLayout BindingContext="{Binding EditCategory}"
                      Padding="10">
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -20,7 +20,7 @@
                        HorizontalOptions="Start"
                        Text="Category:"
                        VerticalOptions="Center"/>
-                
+
                 <Entry Grid.Column="1"
                        Grid.Row="0"
                        HorizontalOptions="FillAndExpand"
@@ -32,19 +32,19 @@
             <ActivityIndicator IsRunning="{Binding IsRunning, Mode=TwoWay}"
                                VerticalOptions="CenterAndExpand"/>
 
-            <StackLayout HorizontalOptions="Center"
+            <StackLayout HorizontalOptions="Center" 
                          Orientation="Horizontal">
                 
                 <Button Command="{Binding SaveCommand}"
-                    BackgroundColor="Navy"
-                    BorderRadius="23"
-                    HeightRequest="46"
-                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                    Margin="10,0"
-                    TextColor="White"
-                    Text="Save"
-                    VerticalOptions="EndAndExpand"/>
-
+                        BackgroundColor="Navy"
+                        BorderRadius="23"
+                        HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        Margin="10,0"
+                        TextColor="White"
+                        Text="Save"
+                        VerticalOptions="EndAndExpand"/>
+            
                 <Button Command="{Binding BackCommand}"
                     BackgroundColor="Green"
                     BorderRadius="23"
@@ -56,7 +56,7 @@
                     VerticalOptions="EndAndExpand"/>
                 
             </StackLayout>
-
+            
         </StackLayout>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

@@ -1,15 +1,17 @@
 ﻿namespace Products.ViewModels
 {
+    using System;
     using System.ComponentModel;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Models;
     using Products.Services;
 
-    public class NewCategoryViewModel : INotifyPropertyChanged
+    public class EditCategoryViewModel : INotifyPropertyChanged
     {
         #region Attributes
 
+        private Category category;
         private string _description;
         private bool _isRunning;
         private bool _isEnabled;
@@ -53,7 +55,7 @@
                 {
                     _description = value;
                     PropertyChanged?.Invoke(
-                        this, 
+                        this,
                         new PropertyChangedEventArgs(nameof(Description)));
                 }
             }
@@ -65,17 +67,17 @@
             {
                 return _isRunning;
             }
-            
+
             set
             {
-                if(value != _isRunning)
+                if (value != _isRunning)
                 {
                     _isRunning = value;
                     PropertyChanged?.Invoke(
-                        this, 
+                        this,
                         new PropertyChangedEventArgs(nameof(IsRunning)));
                 }
-            
+
             }
         }
 
@@ -87,11 +89,11 @@
             }
             set
             {
-                if(value != _isEnabled)
+                if (value != _isEnabled)
                 {
                     _isEnabled = value;
                     PropertyChanged?.Invoke(
-                        this, 
+                        this,
                         new PropertyChangedEventArgs(nameof(IsEnabled)));
                 }
             }
@@ -101,8 +103,13 @@
 
         #region Constructor
 
-        public NewCategoryViewModel()
+        public EditCategoryViewModel(Category category)
         {
+            this.category = category;
+
+            //  Captura la descripcion del objeto recibivo category
+            Description = category.Description;
+
             //  Genera una instancia de la clase de los services
             dialogService = new DialogService();
             apiService = new ApiService();
@@ -119,10 +126,10 @@
         private async void Save()
         {
             //  Valida si los controles del formulario
-            if(string.IsNullOrEmpty(Description))
+            if (string.IsNullOrEmpty(Description))
             {
                 await dialogService.ShowMessage(
-                    "Error", 
+                    "Error",
                     "You must enter a category description...!!!");
                 return;
             }
@@ -132,35 +139,39 @@
 
             //  Valida que haya conexion a internet
             var connection = await apiService.CheckConnection();
-            if(!connection.IsSuccess)
+            if (!connection.IsSuccess)
             {
                 SetEnabledDisable(false, true);
                 await dialogService.ShowMessage("Error", connection.Message);
                 return;
             }
 
-            //  Se crea un objeto Category
-            //  Se carga de datos el objeto Category
-            var category = new Category
-            {
-                Description = Description,
-            };
+            //  No se crea el objeto porque desde el constructor estan enviado el objeto ya cargado
+            ////  Se crea un objeto Category
+            ////  Se carga de datos el objeto Category
+            //var category = new Category
+            //{
+            //    Description = Description,
+            //};
+
+            //  Se le asigna al objeto recibido la descripcion del control
+            category.Description = Description;
 
             //  Invoca una instancia del Sigleton
             var mainViewModel = MainViewModel.GetInstance();
 
-            //  Invoca el metodo aue hqce el insert de datos (Post)
-            //  Post = Verbo que hacer referencia agregar, adicionar
-            var response = await apiService.Post(
-                "http://productszuluapi.azurewebsites.net", 
-                "/api", 
+            //  Invoca el metodo aue hqce el insert de datos (Put)
+            //  Put = Verbo que hace referencia modificar
+            var response = await apiService.Put(
+                "http://productszuluapi.azurewebsites.net",
+                "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,
                 mainViewModel.Token.AccessToken,
                 category);
 
             //  Valida si hubo o no error en el metodo anterior
-            if(!response.IsSuccess)
+            if (!response.IsSuccess)
             {
                 //  Habilita el ActivityIndicator
                 SetEnabledDisable(false, true);
@@ -168,19 +179,15 @@
                 return;
             }
 
-            //  Se crea una categoria a partir del objeto response para 
-            //  Actuzizar el objeto categoria (CategoryVieModel)
-            category = (Category)response.Result;
-
             //  Invoca una instancia del Category
             var categoryVieModel = CategoriesViewModel.GetInstance();
             //  Invoca el metodo que actualiza el objeto de categoria
-            categoryVieModel.AddCategory(category);
+            categoryVieModel.UpdateCategory(category);
 
             //  Habilita el ActivityIndicator
             SetEnabledDisable(false, true);
 
-            await dialogService.ShowMessage("Information", "Category create...!!!");
+            await dialogService.ShowMessage("Information", "Category is updated...!!!");
 
             //  Retorna a la pagina anterior
             await navigationService.Back();
