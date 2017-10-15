@@ -1,10 +1,7 @@
 ﻿namespace Products.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
-    using Plugin.Media;
-    using Plugin.Media.Abstractions;
-    using Products.Helpers;
-    using Products.Models;
+    using Models;
     using Products.Services;
     using System;
     using System.Collections.Generic;
@@ -12,52 +9,47 @@
     using System.Windows.Input;
     using Xamarin.Forms;
 
-    public class NewProductViewModel : INotifyPropertyChanged
+    public class EditProductViewModel : INotifyPropertyChanged
     {
         #region Attributes
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private Product product;
         private string _description;
         private string _price;
         private bool _isActive;
         private DateTime _lastPurchase;
         private string _stock;
         private string _remarks;
-        private bool _isRunnig;
-        private bool _isEnabled;
         private DialogService dialogService;
         private ApiService apiService;
         private NavigationService navigationService;
-        private string _image;
+        private bool _isRunning;
+        private bool _isEnabled;
+        private decimal stock;
+        private decimal price;
         private ImageSource _imageSource;
-        private MediaFile file;
 
-        #endregion
+        #endregion Attributes
 
         #region Commands
 
-        public ICommand SaveProductCommand
+        public ICommand SaveCommand
         {
-            get
-            {
-                return new RelayCommand(SaveProduct);
-            }
+            get { return new RelayCommand(Save); }
         }
 
         public ICommand BackCommand
         {
-            get
-            {
-                return new RelayCommand(Back);
-            }
+            get { return new RelayCommand(Back); }
         }
 
-        public ICommand ChangeImageCommand
-        {
-            get { return new RelayCommand(ChangeImage); }
-        }
+        #endregion  Commands
 
-        #endregion
+        #region Event
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion Event
 
         #region Properties
 
@@ -157,33 +149,17 @@
             }
         }
 
-        public string Image
-        {
-            get
-            {
-                return _image;
-            }
-            set
-            {
-                if (value != _image)
-                {
-                    _image = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image)));
-                }
-            }
-        }
-
         public bool IsRunning
         {
             get
             {
-                return _isRunnig;
+                return _isRunning;
             }
             set
             {
-                if (value != _isRunnig)
+                if (value != _isRunning)
                 {
-                    _isRunnig = value;
+                    _isRunning = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRunning)));
                 }
             }
@@ -205,6 +181,8 @@
             }
         }
 
+        public List<Product> Products { get; set; }
+
         public ImageSource ImageSource
         {
             get
@@ -221,41 +199,66 @@
             }
         }
 
-        public List<Product> Products { get; set; }
+        #endregion Properties
 
-        #endregion
+        #region Constructor
 
-        #region Costructor
-
-        public NewProductViewModel()
+        public EditProductViewModel(Product product)
         {
-            //  Activa los controles del formulario
-            SetEnabledDisable(false, true);
+            //  Habilita el ActivityIndicator
+            SetEnabledDisable(true, false);
 
-            //  Define la fecha actual
-            LastPurchase = DateTime.Now;
+            this.product = product;
 
-            //  Coloca activo el producto
-            IsActive = true;
-
-            //  Coloca el recurso (Imagen) NoImage
-            //  Image = "noimage.png";
-            ImageSource = "noimage.png";
-
-            //  Instancia los servicios
+            //  Genera la instancia de cada clase (Service)
             dialogService = new DialogService();
             apiService = new ApiService();
             navigationService = new NavigationService();
+
+            //  Invoca el metodo que hace la carga de datos en cada control
+            LoadProduct(this.product);
+
+            //  Habilita el ActivityIndicator
+            SetEnabledDisable(false, true);
         }
 
-        #endregion
+        #endregion  Constructor
 
         #region Methods
 
         /// <summary>
-        /// Metodo asincrono que guarda los datos del producto
+        /// Metodo que hace la carga de datos en los controles
         /// </summary>
-        private async void SaveProduct()
+        /// <param name="product">Objeto Product</param>
+        private void LoadProduct(Product product)
+        {
+            Description = product.Description;
+            Price = product.Price.ToString().Trim();
+            ImageSource = product.ImageFullPath;
+            IsActive = product.IsActive;
+            LastPurchase = product.LastPurchase;
+            Stock = product.Stock.ToString().Trim();
+            Remarks = product.Remarks;
+        }
+
+        /// <summary>
+        /// Captura todos los datos en el objeto Product
+        /// </summary>
+        /// <param name="product">Objeto Product</param>
+        private void LoadValueInProduct(Product product)
+        {
+            product.Description = Description;
+            product.Price = price;
+            product.IsActive = IsActive;
+            product.LastPurchase = LastPurchase;
+            product.Stock = (double)stock;
+            product.Remarks = Remarks;
+        }
+
+        /// <summary>
+        /// Metodo que guarda las modificaciones del producto
+        /// </summary>
+        private async void Save()
         {
             //  Valida los controles del formularios
             if (string.IsNullOrEmpty(Description))
@@ -274,7 +277,7 @@
                 return;
             }
 
-            decimal price = 0.0m;
+            price = 0.0m;
             if (!decimal.TryParse(Price, out price))
             {
                 await dialogService.ShowMessage(
@@ -291,8 +294,8 @@
                 return;
             }
 
-            double stock = 0.00;
-            if (!double.TryParse(Stock, out stock))
+            stock = 0.0m;
+            if (!decimal.TryParse(Stock, out stock))
             {
                 await dialogService.ShowMessage(
                     "Error",
@@ -315,38 +318,19 @@
             var connection = await apiService.CheckConnection();
             if (!connection.IsSuccess)
             {
-                //  Habilita el ActivityIndicator
                 SetEnabledDisable(false, true);
                 await dialogService.ShowMessage("Error", connection.Message);
                 return;
             }
 
-            //  Optiene una instancia del MainViewModel para extraer los datos del Token
+            //  Asigna todos los valores al objeto Product
+            LoadValueInProduct(product);
+
+            //  Optiene una instancia de la MainViewModel
             var mainViewModel = MainViewModel.GetInstance();
 
-            //  Envia el objeto MediaFile (file) al metodo para que devuelva un Array de byte[]
-            byte[] imageArray = null;
-            if (file != null)
-            {
-                imageArray = FilesHelper.ReadFully(file.GetStream());
-                file.Dispose();
-            }
-
-            //  Crea un objeto de tipo product
-            var product = new Product
-            {
-                CategoryId = mainViewModel.Category.CategoryId,
-                Description = Description,
-                Price = price,
-                ImageArray = imageArray,
-                IsActive = IsActive,
-                LastPurchase = LastPurchase,
-                Stock = stock,
-                Remarks = Remarks,
-            };
-
-            //  Invoca el metodo que hace el insert de datos (Api)
-            var response = await apiService.Post(
+            //  Invoca el metodo Apiservice Update
+            var response = await apiService.Put(
                 "http://productszuluapi.azurewebsites.net",
                 "/api",
                 "/Products",
@@ -354,31 +338,40 @@
                 mainViewModel.Token.AccessToken,
                 product);
 
-            //  Valida si hubo o no error en el WepAPI
+            //  Valida si hubo o no error en el metodo anterior
             if (!response.IsSuccess)
             {
                 //  Habilita el ActivityIndicator
                 SetEnabledDisable(false, true);
-                await dialogService.ShowMessage("Error", response.Message);
+                await dialogService.ShowMessage(
+                    "Error",
+                    response.Message);
                 return;
             }
 
-            //  Crea una instancia del ProductViewModel
-            var productViewModel = ProductsViewModel.GetInstance(Products);
-            //  var productViewModel = ProductsViewModel.GetInstance();
-            productViewModel.AddProduct((Product)response.Result);
+            //  Invoca una instancia del ProductViewModel
+            var productsViewModel = ProductsViewModel.GetInstance(Products);
+            //  var productsViewModel = ProductsViewModel.GetInstance();
+            productsViewModel.UpdateProduct((Product)response.Result);
 
             //  Habilita el ActivityIndicator
             SetEnabledDisable(false, true);
 
-            //  Mensaje de sistema
             await dialogService.ShowMessage(
                 "Information",
                 string.Format(
-                    "Product {0} add successful...!!!",
+                    "Product {0} is updated....!!!",
                     product.Description.Trim()));
 
-            //  Hace el Back del NavigationService
+            //  Navega a la pagina anterior
+            await navigationService.Back();
+        }
+
+        /// <summary>
+        /// Metodo que hace la navegacion hacia atras
+        /// </summary>
+        private async void Back()
+        {
             await navigationService.Back();
         }
 
@@ -393,67 +386,6 @@
             IsEnabled = isEnabled;
         }
 
-        private async void Back()
-        {
-            await navigationService.Back();
-        }
-
-        /// <summary>
-        /// Metodo que hace el browse de la camara o directorio de imagen
-        /// </summary>
-        private async void ChangeImage()
-        {
-            //  Inicializacion de Nuget
-            await CrossMedia.Current.Initialize();
-
-            //  Valida si tiene camara el dispositivo
-            if (CrossMedia.Current.IsCameraAvailable &&
-                CrossMedia.Current.IsTakePhotoSupported)
-            {
-                //  Llama al metodo que hace DisplayActionSheet
-                var source = await dialogService.ShowImageOptions();
-
-                //  Cancela el proceso
-                if (source == "Cancel")
-                {
-                    file = null;
-                    return;
-                }
-
-                //  Optiene la foto de la camera
-                if (source == "From camera")
-                {
-                    file = await CrossMedia.Current.TakePhotoAsync(
-                        new StoreCameraMediaOptions
-                        {
-                            Directory = "Sample",
-                            Name = "test.jpg",
-                            PhotoSize = PhotoSize.Small,
-                        }
-                    );
-                }
-                else
-                {
-                    //  Optiene la foto de la galeria
-                    file = await CrossMedia.Current.PickPhotoAsync();
-                }
-            }
-            else
-            {
-                //  Optiene la foto de la galeria
-                file = await CrossMedia.Current.PickPhotoAsync();
-            }
-
-            if (file != null)
-            {
-                ImageSource = ImageSource.FromStream(() =>
-                {
-                    var stream = file.GetStream();
-                    return stream;
-                });
-            }
-        }
-
-        #endregion
+        #endregion Methods
     }
 }

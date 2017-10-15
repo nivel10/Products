@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="Products.Views.NewProductView"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}" 
-             Title="New Product">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Edit Products"
+             x:Class="Products.Views.EditProductView">
 
     <ContentPage.Content>
-
         <ScrollView>
-            <StackLayout BindingContext="{Binding NewProduct}"
+
+            <StackLayout BindingContext="{Binding EditProduct}"
                      Padding="10">
 
                 <!--Grid-->
@@ -62,9 +62,16 @@
                        Text="Last purchase:"
                        VerticalOptions="Center"/>
 
+                    <!--<Entry Grid.Column="1" 
+                       Grid.Row="4" 
+                       HorizontalOptions="FillAndExpand"
+                       Placeholder="Enter last purchase...!!!"
+                       Text="{Binding LastPurchase}"
+                       VerticalOptions="Center"/>-->
+
                     <DatePicker Format="dd/MM/yyyy"
                             Grid.Column="1" 
-                            Grid.Row="3" 
+                            Grid.Row="3"
                             HorizontalOptions="FillAndExpand"
                             Date="{Binding LastPurchase}"
                             VerticalOptions="Center"/>
@@ -98,24 +105,20 @@
                 </Grid>
 
                 <Image HeightRequest="130"
-                       Source="{Binding ImageSource, Mode=TwoWay}"
-                       WidthRequest="130">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeImageCommand}"/>
-                    </Image.GestureRecognizers>
-                </Image>
+                       Source="{Binding ImageSource}"
+                       WidthRequest="130"/>
 
                 <!-- Activity Indicator -->
                 <ActivityIndicator IsRunning="{Binding IsRunning, Mode=TwoWay}"
                                    VerticalOptions="CenterAndExpand"/>
 
                 <StackLayout Orientation="Horizontal"
-                             HorizontalOptions="Center">
+                         HorizontalOptions="Center">
 
                     <!-- Button -->
                     <Button BackgroundColor="Navy"
                         BorderRadius="23"
-                        Command="{Binding SaveProductCommand}"
+                        Command="{Binding SaveCommand}"
                         HeightRequest="46"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         Margin="10,0"
@@ -136,7 +139,7 @@
                 </StackLayout>
 
             </StackLayout>
-        </ScrollView>
 
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

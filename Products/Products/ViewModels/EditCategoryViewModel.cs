@@ -1,11 +1,10 @@
 ﻿namespace Products.ViewModels
 {
-    using System;
-    using System.ComponentModel;
-    using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Models;
     using Products.Services;
+    using System.ComponentModel;
+    using System.Windows.Input;
 
     public class EditCategoryViewModel : INotifyPropertyChanged
     {
@@ -123,6 +122,9 @@
 
         #region Methods
 
+        /// <summary>
+        /// Metodo que actualzia la categoria
+        /// </summary>
         private async void Save()
         {
             //  Valida si los controles del formulario
@@ -187,7 +189,11 @@
             //  Habilita el ActivityIndicator
             SetEnabledDisable(false, true);
 
-            await dialogService.ShowMessage("Information", "Category is updated...!!!");
+            await dialogService.ShowMessage(
+                "Information",
+                string.Format(
+                    "Category {0} is updated...!!!",
+                    category.Description.Trim()));
 
             //  Retorna a la pagina anterior
             await navigationService.Back();

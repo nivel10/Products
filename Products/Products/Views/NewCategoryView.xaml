@@ -4,11 +4,11 @@
              x:Class="Products.Views.NewCategoryView"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="New Category">
-    
-	<ContentPage.Content>
+
+    <ContentPage.Content>
         <StackLayout BindingContext="{Binding NewCategory}"
                      Padding="10">
-            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -20,7 +20,7 @@
                        HorizontalOptions="Start"
                        Text="Category:"
                        VerticalOptions="Center"/>
-                
+
                 <Entry Grid.Column="1"
                        Grid.Row="0"
                        HorizontalOptions="FillAndExpand"
@@ -34,7 +34,7 @@
 
             <StackLayout HorizontalOptions="Center"
                          Orientation="Horizontal">
-                
+
                 <Button Command="{Binding SaveCommand}"
                     BackgroundColor="Navy"
                     BorderRadius="23"
@@ -54,9 +54,9 @@
                     TextColor="White"
                     Text="Back"
                     VerticalOptions="EndAndExpand"/>
-                
+
             </StackLayout>
 
         </StackLayout>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

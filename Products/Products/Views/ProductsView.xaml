@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             BindingContext="{Binding Main, Source={StaticResource Locator}}"
-            Title="Products"
+            Title="{Binding Category.Description}"
             x:Class="Products.Views.ProductsView">
 
     <!-- ToolbarItem -->
@@ -10,29 +10,55 @@
         <ToolbarItem Icon="ic_action_add_circle.png"
                      Command="{Binding NewProductCommand}"/>
     </ContentPage.ToolbarItems>
-    
-	<ContentPage.Content>
+
+    <ContentPage.Content>
 
         <StackLayout BindingContext="{Binding Products}"
                      Padding="5">
+
+            <!--Estas propiedades hace el Refresh del View
+                Para que se ejecuten debe tener estas dos propiedades
+                IsPullToRefreshEnabled="True" => Hace que el evento de tomar, jalar hacia abajo y soltar de ejecute
+                RefreshCommand="{Binding RefreshCommand}" => Es el command que invoca el methodo en el ViewModel-->
+            <!--<ListView HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                      ItemsSource="{Binding ProductsList}"
+                      RefreshCommand="{Binding RefreshCommand}">-->
+
             <ListView HasUnevenRows="True"
+                      IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
                       ItemsSource="{Binding ProductsList}">
+                
+                <!--ProductsList es una clase que se hace Binding a los controles del
+                    View por ende, cualquier control que se vaya a Bindar debera por 
+                    Consiguiente estar en la clase ProductsList (Models)-->
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+
+                            <!-- Menu contextual editar / eliminar-->
+                            <ViewCell.ContextActions>
+                                <MenuItem Command="{Binding EditCommand}"
+                                          Text="Edit"/>
+                                <MenuItem Command="{Binding DeleteCommand}"
+                                          Text="Delete"
+                                          IsDestructive="True"/>
+                            </ViewCell.ContextActions>
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Image Grid.Column="0"
                                        HeightRequest="80"
                                        HorizontalOptions="Start" 
                                        Source="{Binding ImageFullPath}"
                                        WidthRequest="100"/>
-                                
+
                                 <Label Grid.Column="1"
                                        HorizontalOptions="FillAndExpand"
                                        Text="{Binding Description}"
@@ -44,5 +70,5 @@
 
             </ListView>
         </StackLayout>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

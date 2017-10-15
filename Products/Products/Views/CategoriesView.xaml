@@ -4,37 +4,37 @@
              x:Class="Products.Views.CategoriesView"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Categories">
-    
+
     <!-- ToolbarItems -->
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="ic_action_add_circle.png"
                      Command="{Binding NewCategoryCommand}"/>
     </ContentPage.ToolbarItems>
-    
+
     <ContentPage.Content>
 
         <StackLayout BindingContext="{Binding Categories}"
                      Padding="5">
-            
+
             <!--Estas propiedades hace el Refresh del View
                 Para que se ejecuten debe tener estas dos propiedades
                 IsPullToRefreshEnabled="True" => Hace que el evento de tomar, jalar hacia abajo y soltar de ejecute
                 RefreshCommand="{Binding RefreshCommand}" => Es el command que invoca el methodo en el ViewModel-->
-            
+
             <ListView HasUnevenRows="True"
-                      IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
                       IsPullToRefreshEnabled="True"
-                      RefreshCommand="{Binding RefreshCommand}"
-                      ItemsSource="{Binding CategoriesList}">
+                      IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                      ItemsSource="{Binding CategoriesList}"
+                      RefreshCommand="{Binding RefreshCommand}">
 
                 <!--CategoriesList es una clase que se hace Binding a los controles del
                     View por ende, cualquier control que se vaya a Bindar debera por 
                     Consiguiente estar en la clase CategoriesList (Models)-->
-                
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            
+
                             <!-- Esta seccion es para aplciar evento de menu contextual -->
                             <ViewCell.ContextActions>
                                 <MenuItem Command="{Binding EditCommand}"
@@ -43,7 +43,7 @@
                                           IsDestructive="True"
                                           Text="Delete"/>
                             </ViewCell.ContextActions>
-                            
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -66,7 +66,7 @@
                                         <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
-                                
+
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

@@ -1,7 +1,6 @@
 ﻿namespace Products.API.Controllers
 {
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
@@ -90,19 +89,40 @@
 
             db.Entry(category).State = EntityState.Modified;
 
+            //  Se mejoro el try{}
+            //try
+            //{
+            //    await db.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!CategoryExists(id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //  Se hace esta validacion para que el App Movil nos muestre el error
             try
             {
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!CategoryExists(id))
+                //  Valida los InnerException por duplicidad de descripcion
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-                    return NotFound();
+                    return BadRequest("There are a record with the same description...!!!");
                 }
                 else
                 {
-                    throw;
+                    return BadRequest(ex.Message);
                 }
             }
 
@@ -151,7 +171,25 @@
             }
 
             db.Categories.Remove(category);
-            await db.SaveChangesAsync();
+
+            //  Se hace esta validacion para que el App Movil nos muestre el error
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    return BadRequest("You can't this record, becouse it has related record...!!!");
+                }
+                else
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
 
             return Ok(category);
         }

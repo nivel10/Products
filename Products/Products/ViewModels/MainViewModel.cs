@@ -58,6 +58,18 @@
             set;
         }
 
+        public Category Category
+        {
+            get;
+            set;
+        }
+
+        public EditProductViewModel EditProduct
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Commands
@@ -89,15 +101,15 @@
 
         }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// Metodo (Sigleton) que invoca una instancia de la MainViewModel
-		/// </summary>
-		/// <returns>Objeto MainViewModel</returns>
-		public static MainViewModel GetInstance()
+        /// <summary>
+        /// Metodo (Sigleton) que invoca una instancia de la MainViewModel
+        /// </summary>
+        /// <returns>Objeto MainViewModel</returns>
+        public static MainViewModel GetInstance()
         {
             if (_instance == null)
             {
@@ -109,23 +121,23 @@
             }
         }
 
-		private async void GoNewCategory()
-		{
+        private async void GoNewCategory()
+        {
             //  Genera una instancia de la NewCategory para bindar con la View
             NewCategory = new NewCategoryViewModel();
 
             //  Invoca el servicio de navegacion
             await navigationService.Navigate("NewCategoryView");
-		}
+        }
 
-		private async void GoNewProduct()
-		{
+        private async void GoNewProduct()
+        {
             //  Se invoca una instancia del NewProduct
             NewProduct = new NewProductViewModel();
-                
+
             //  Invoca el servicio de nqvegacion
             await navigationService.Navigate("NewProductView");
-		}
+        }
 
         #endregion
     }

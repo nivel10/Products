@@ -6,18 +6,18 @@
     using Products.Services;
 
     public class LoginViewModel : INotifyPropertyChanged
-	{
-		#region Attributes
+    {
+        #region Attributes
 
-		private string _email;
-		private string _password;
-		private bool _isToggled;
-		private bool _isRunning;
-		private bool _isEnabled;
+        private string _email;
+        private string _password;
+        private bool _isToggled;
+        private bool _isRunning;
+        private bool _isEnabled;
 
-		#region Services
+        #region Services
 
-		private DialogService dialogService;
+        private DialogService dialogService;
         private ApiService apiService;
         private NavigationService navigationService;
 
@@ -35,156 +35,156 @@
             }
         }
 
-		#endregion
+        #endregion
 
-		#region Events
+        #region Events
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public string Email
-		{
-			get
-			{
-				return _email;
-			}
-			set
-			{
-				if (value != _email)
-				{
-					_email = value;
-					PropertyChanged?.Invoke(
+        public string Email
+        {
+            get
+            {
+                return _email;
+            }
+            set
+            {
+                if (value != _email)
+                {
+                    _email = value;
+                    PropertyChanged?.Invoke(
                         this,
                         new PropertyChangedEventArgs(nameof(Email)));
-				}
-			}
-		}
+                }
+            }
+        }
 
-		public string Password
-		{
-			get
-			{
-				return _password;
-			}
-			set
-			{
-				if (value != _password)
-				{
-					_password = value;
-					PropertyChanged?.Invoke(
-                        this,         
+        public string Password
+        {
+            get
+            {
+                return _password;
+            }
+            set
+            {
+                if (value != _password)
+                {
+                    _password = value;
+                    PropertyChanged?.Invoke(
+                        this,
                         new PropertyChangedEventArgs(nameof(Password)));
-				}
-			}
-		}
+                }
+            }
+        }
 
-		public bool IsToggled
-		{
-			get
-			{
-				return _isToggled;
-			}
-			set
-			{
-				if (value != _isToggled)
-				{
+        public bool IsToggled
+        {
+            get
+            {
+                return _isToggled;
+            }
+            set
+            {
+                if (value != _isToggled)
+                {
                     _isToggled = value;
-					PropertyChanged?.Invoke(
+                    PropertyChanged?.Invoke(
                         this,
                         new PropertyChangedEventArgs(nameof(IsToggled)));
-				}
-			}
-		}
+                }
+            }
+        }
 
-		public bool IsRunning
-		{
-			get
-			{
-				return _isRunning;
-			}
-			set
-			{
-				if (value != _isRunning)
-				{
-					_isRunning = value;
-					PropertyChanged?.Invoke(
-                        this, 
+        public bool IsRunning
+        {
+            get
+            {
+                return _isRunning;
+            }
+            set
+            {
+                if (value != _isRunning)
+                {
+                    _isRunning = value;
+                    PropertyChanged?.Invoke(
+                        this,
                         new PropertyChangedEventArgs(nameof(IsRunning)));
-				}
-			}
-		}
+                }
+            }
+        }
 
-		public bool IsEnabled
-		{
-			get
-			{
-				return _isEnabled;
-			}
-			set
-			{
-				if (value != _isEnabled)
-				{
-					_isEnabled = value;
-					PropertyChanged?.Invoke(
-                        this, 
+        public bool IsEnabled
+        {
+            get
+            {
+                return _isEnabled;
+            }
+            set
+            {
+                if (value != _isEnabled)
+                {
+                    _isEnabled = value;
+                    PropertyChanged?.Invoke(
+                        this,
                         new PropertyChangedEventArgs(nameof(IsEnabled)));
-				}
-			}
-		}
+                }
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public LoginViewModel()
-		{
+        public LoginViewModel()
+        {
             //  Eliminar
             Email = "jzuluaga55@gmail.com";
             Password = "123456";
 
-			//  Inicializacion de datos
-			IsRunning = false;
-			IsEnabled = true;
-			IsToggled = true;
+            //  Inicializacion de datos
+            IsRunning = false;
+            IsEnabled = true;
+            IsToggled = true;
 
-			//  Instancia de los services
-			dialogService = new DialogService();
+            //  Instancia de los services
+            dialogService = new DialogService();
             apiService = new ApiService();
             navigationService = new NavigationService();
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		private async void Login()
-		{
+        private async void Login()
+        {
             //  Valida los campos del formulario
-			if (string.IsNullOrEmpty(Email))
-			{
-				await dialogService.ShowMessage(
-					"Error",
-					"Your must enter an email...!!!");
-				return;
-			}
+            if (string.IsNullOrEmpty(Email))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "Your must enter an email...!!!");
+                return;
+            }
 
-			if (string.IsNullOrEmpty(Password))
-			{
-				await dialogService.ShowMessage(
-					"Error",
-					"Your must enter a password...!!!");
-				return;
-			}
+            if (string.IsNullOrEmpty(Password))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "Your must enter a password...!!!");
+                return;
+            }
 
             //  Activa el ActivityIndicator
             SetEnabledDisable(true, false);
 
             //  Valida si el dispositivo tiene conexion 
             var connection = await apiService.CheckConnection();
-            if(!connection.IsSuccess)
+            if (!connection.IsSuccess)
             {
                 SetEnabledDisable(false, true);
                 await dialogService.ShowMessage("Error", connection.Message);
@@ -193,28 +193,28 @@
 
             //  Valida si se puede optenet el Token
             var tokenResponse = await apiService.GetToken(
-                "http://productszuluapi.azurewebsites.net", 
-                Email, 
+                "http://productszuluapi.azurewebsites.net",
+                Email,
                 Password);
-            if(tokenResponse == null)
-            { 
+            if (tokenResponse == null)
+            {
                 SetEnabledDisable(false, true);
                 Password = null;
                 await dialogService.ShowMessage(
-                    "Error", 
+                    "Error",
                     "The service not available, plase try latter...!!!");
                 return;
             }
 
-			if (string.IsNullOrEmpty(tokenResponse.AccessToken))
-			{
-				SetEnabledDisable(false, true);
-				Password = null;
-				await dialogService.ShowMessage(
-                    "Error", 
+            if (string.IsNullOrEmpty(tokenResponse.AccessToken))
+            {
+                SetEnabledDisable(false, true);
+                Password = null;
+                await dialogService.ShowMessage(
+                    "Error",
                     tokenResponse.ErrorDescription);
-				return;
-			}
+                return;
+            }
 
             //  Valida si hubo o no error en los metodos anterior
             SetEnabledDisable(false, true);
@@ -238,17 +238,17 @@
             await navigationService.Navigate("CategoriesView");
         }
 
-		/// <summary>
-		/// Metodo qua habilita o deshabilita los controles del formulario
-		/// </summary>
-		/// <param name="isRunning">Bool que indica si el ActivityIndicator esta activo o no</param>
-		/// <param name="isEnabled">Bool que indica si los controles estan activo o no</param>
-		private void SetEnabledDisable(bool isRunning, bool isEnabled)
+        /// <summary>
+        /// Metodo qua habilita o deshabilita los controles del formulario
+        /// </summary>
+        /// <param name="isRunning">Bool que indica si el ActivityIndicator esta activo o no</param>
+        /// <param name="isEnabled">Bool que indica si los controles estan activo o no</param>
+        private void SetEnabledDisable(bool isRunning, bool isEnabled)
         {
             IsRunning = isRunning;
             IsEnabled = isEnabled;
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }

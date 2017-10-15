@@ -35,7 +35,7 @@
 
         public ICommand DeleteCommand
         {
-            get{ return new RelayCommand(Delete); }
+            get { return new RelayCommand(Delete); }
         }
 
         #endregion
@@ -69,10 +69,13 @@
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Products = new ProductsViewModel(Products);
 
-			//  Genera la navegacion de la pagina 
+            //  Asigna a la propiedad Category el objeto de la categoria
+            mainViewModel.Category = this;
+
+            //  Genera la navegacion de la pagina 
             //  PushAsync() = Apilar Paginas
-			//  PopAsync() = Desapila paginas
-			//  Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
+            //  PopAsync() = Desapila paginas
+            //  Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
             await navigationService.Navigate("ProductsView");
         }
 
@@ -98,7 +101,7 @@
         private async void Delete()
         {
             var response = await dialogService.ShowConfirm(
-                "Confirm", 
+                "Confirm",
                 "Are you sure to deleted record...?");
             if (response)
             {

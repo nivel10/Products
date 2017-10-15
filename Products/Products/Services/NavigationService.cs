@@ -14,8 +14,8 @@
         /// <param name="pageName">String que almacena el nombre del view a navegar</param>
         public async Task Navigate(string pageName)
         {
-            switch(pageName)
-            { 
+            switch (pageName)
+            {
                 case "CategoriesView":
                     await Application.Current.MainPage.Navigation.PushAsync(
                         new CategoriesView());
@@ -40,6 +40,12 @@
                     await Application.Current.MainPage.Navigation.PushAsync(
                         new EditCategoryView());
                     break;
+
+                case "EditProductView":
+                    await Application.Current.MainPage.Navigation.PushAsync(
+                        new EditProductView());
+                    break;
+
             };
         }
 

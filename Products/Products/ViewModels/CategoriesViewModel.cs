@@ -1,14 +1,14 @@
 ﻿namespace Products.ViewModels
 {
+    using GalaSoft.MvvmLight.Command;
+    using Products.Models;
+    using Products.Services;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
-    using Products.Models;
-    using Products.Services;
-    using System.Windows.Input;
-    using GalaSoft.MvvmLight.Command;
     using System.Threading.Tasks;
+    using System.Windows.Input;
 
     public class CategoriesViewModel : INotifyPropertyChanged
     {
@@ -238,6 +238,6 @@
             await dialogService.ShowMessage("Information", "Category is deleted...!!!");
         }
 
-        #endregion
+        #endregion Methods
     }
 }

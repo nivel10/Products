@@ -53,7 +53,7 @@
                 {
                     _description = value;
                     PropertyChanged?.Invoke(
-                        this, 
+                        this,
                         new PropertyChangedEventArgs(nameof(Description)));
                 }
             }
@@ -65,17 +65,17 @@
             {
                 return _isRunning;
             }
-            
+
             set
             {
-                if(value != _isRunning)
+                if (value != _isRunning)
                 {
                     _isRunning = value;
                     PropertyChanged?.Invoke(
-                        this, 
+                        this,
                         new PropertyChangedEventArgs(nameof(IsRunning)));
                 }
-            
+
             }
         }
 
@@ -87,11 +87,11 @@
             }
             set
             {
-                if(value != _isEnabled)
+                if (value != _isEnabled)
                 {
                     _isEnabled = value;
                     PropertyChanged?.Invoke(
-                        this, 
+                        this,
                         new PropertyChangedEventArgs(nameof(IsEnabled)));
                 }
             }
@@ -116,13 +116,16 @@
 
         #region Methods
 
+        /// <summary>
+        /// Metodo que genera una nueva Category
+        /// </summary>
         private async void Save()
         {
             //  Valida si los controles del formulario
-            if(string.IsNullOrEmpty(Description))
+            if (string.IsNullOrEmpty(Description))
             {
                 await dialogService.ShowMessage(
-                    "Error", 
+                    "Error",
                     "You must enter a category description...!!!");
                 return;
             }
@@ -132,7 +135,7 @@
 
             //  Valida que haya conexion a internet
             var connection = await apiService.CheckConnection();
-            if(!connection.IsSuccess)
+            if (!connection.IsSuccess)
             {
                 SetEnabledDisable(false, true);
                 await dialogService.ShowMessage("Error", connection.Message);
@@ -152,15 +155,15 @@
             //  Invoca el metodo aue hqce el insert de datos (Post)
             //  Post = Verbo que hacer referencia agregar, adicionar
             var response = await apiService.Post(
-                "http://productszuluapi.azurewebsites.net", 
-                "/api", 
+                "http://productszuluapi.azurewebsites.net",
+                "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,
                 mainViewModel.Token.AccessToken,
                 category);
 
             //  Valida si hubo o no error en el metodo anterior
-            if(!response.IsSuccess)
+            if (!response.IsSuccess)
             {
                 //  Habilita el ActivityIndicator
                 SetEnabledDisable(false, true);
@@ -180,7 +183,11 @@
             //  Habilita el ActivityIndicator
             SetEnabledDisable(false, true);
 
-            await dialogService.ShowMessage("Information", "Category create...!!!");
+            await dialogService.ShowMessage(
+                "Information",
+                string.Format(
+                    "Category {0} created...!!!",
+                    category.Description));
 
             //  Retorna a la pagina anterior
             await navigationService.Back();
