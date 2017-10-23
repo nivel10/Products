@@ -70,6 +70,12 @@
             set;
         }
 
+        public NewCustomerViewModel NewCustomer
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Commands

@@ -393,6 +393,9 @@
             IsEnabled = isEnabled;
         }
 
+        /// <summary>
+        /// Metodo que hace la navegacion hacia atras
+        /// </summary>
         private async void Back()
         {
             await navigationService.Back();

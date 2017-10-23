@@ -104,10 +104,20 @@
                        Text="{Binding Remarks}"/>
                 </Grid>
 
-                <Image HeightRequest="130"
-                       Source="{Binding ImageSource}"
-                       WidthRequest="130"/>
+                <!--Image-->
+                <Image HeightRequest="160"
+                       Source="{Binding ImageSource, Mode=TwoWay}"
+                       WidthRequest="160">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeImageCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
 
+                <!--Etiqueta-->
+                <Label FontSize="Small" 
+                       HorizontalOptions="Center" 
+                       Text="Tap on image to change it...!!!"/>
+                
                 <!-- Activity Indicator -->
                 <ActivityIndicator IsRunning="{Binding IsRunning, Mode=TwoWay}"
                                    VerticalOptions="CenterAndExpand"/>

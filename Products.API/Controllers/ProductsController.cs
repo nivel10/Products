@@ -40,21 +40,79 @@
             return Ok(product);
         }
 
+        //// PUT: api/Products/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutProduct(int id, Product product)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (id != product.ProductId)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    db.Entry(product).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ProductExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
         // PUT: api/Products/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProduct(int id, Product product)
+        public async Task<IHttpActionResult> PutProduct(int id, ProductRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != product.ProductId)
+            //  Valida que ImageArray sedifrente de nulo y tenga almenos un byte
+            if (request.ImageArray != null && request.ImageArray.Length > 0)
+            {
+                //  Transforma el ImageArray en MemoryStream
+                var stream = new MemoryStream(request.ImageArray);
+                //  Genra un string con un Guid
+                var guid = Guid.NewGuid().ToString();
+                //  Crea el nombre del archivo concatenando la extencion .jpg
+                var file = string.Format("{0}.jpg", guid);
+                //  Crea la ruta del FolderPath
+                var folder = "~/Content/Images";
+                //  Crea la ruta FullPath
+                var fullPath = string.Format("{0}/{1}", folder, file);
+                //  Invoca el metodo del FileHelper (Recibe un MemoryStream y retorna un Array byte[]
+                var response = FilesHelper.UploadPhoto(stream, folder, file);
+
+                //  Valida si el metodo anterior falló
+                if (response)
+                {
+                    request.Image = fullPath;
+                }
+            }
+
+            if (id != request.ProductId)
             {
                 return BadRequest();
             }
 
-            db.Entry(product).State = EntityState.Modified;
+            db.Entry(request).State = EntityState.Modified;
 
             try
             {

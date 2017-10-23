@@ -2,6 +2,9 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Models;
+    using Plugin.Media;
+    using Plugin.Media.Abstractions;
+    using Products.Helpers;
     using Products.Services;
     using System;
     using System.Collections.Generic;
@@ -28,6 +31,7 @@
         private decimal stock;
         private decimal price;
         private ImageSource _imageSource;
+        private MediaFile file;
 
         #endregion Attributes
 
@@ -41,6 +45,11 @@
         public ICommand BackCommand
         {
             get { return new RelayCommand(Back); }
+        }
+
+        public ICommand ChangeImageCommand
+        {
+            get {return new RelayCommand(ChangeImage); }
         }
 
         #endregion  Commands
@@ -245,7 +254,7 @@
         /// Captura todos los datos en el objeto Product
         /// </summary>
         /// <param name="product">Objeto Product</param>
-        private void LoadValueInProduct(Product product)
+        private void LoadValueInProduct(Product product, byte[] imageArray)
         {
             product.Description = Description;
             product.Price = price;
@@ -253,6 +262,7 @@
             product.LastPurchase = LastPurchase;
             product.Stock = (double)stock;
             product.Remarks = Remarks;
+            product.ImageArray = imageArray;
         }
 
         /// <summary>
@@ -322,12 +332,20 @@
                 await dialogService.ShowMessage("Error", connection.Message);
                 return;
             }
-
-            //  Asigna todos los valores al objeto Product
-            LoadValueInProduct(product);
-
+            
             //  Optiene una instancia de la MainViewModel
             var mainViewModel = MainViewModel.GetInstance();
+
+            //  Envia el objeto MediaFile (file) al metodo para que devuelva un Array de byte[]
+            byte[] imageArray = null;
+            if (file != null)
+            {
+                imageArray = FilesHelper.ReadFully(file.GetStream());
+                file.Dispose();
+            }
+
+            //  Asigna todos los valores al objeto Product
+            LoadValueInProduct(product, imageArray);
 
             //  Invoca el metodo Apiservice Update
             var response = await apiService.Put(
@@ -351,6 +369,7 @@
 
             //  Invoca una instancia del ProductViewModel
             var productsViewModel = ProductsViewModel.GetInstance(Products);
+
             //  var productsViewModel = ProductsViewModel.GetInstance();
             productsViewModel.UpdateProduct((Product)response.Result);
 
@@ -384,6 +403,62 @@
         {
             IsRunning = isRunning;
             IsEnabled = isEnabled;
+        }
+
+        /// <summary>
+        /// Metodo que hace el browse de la camara o directorio de imagen
+        /// </summary>
+        private async void ChangeImage()
+        {
+            //  Inicializacion de Nuget
+            await CrossMedia.Current.Initialize();
+
+            //  Valida si tiene camara el dispositivo
+            if (CrossMedia.Current.IsCameraAvailable &&
+                CrossMedia.Current.IsTakePhotoSupported)
+            {
+                //  Llama al metodo que hace DisplayActionSheet
+                var source = await dialogService.ShowImageOptions();
+
+                //  Cancela el proceso
+                if (source == "Cancel")
+                {
+                    file = null;
+                    return;
+                }
+
+                //  Optiene la foto de la camera
+                if (source == "From camera")
+                {
+                    file = await CrossMedia.Current.TakePhotoAsync(
+                        new StoreCameraMediaOptions
+                        {
+                            Directory = "Sample",
+                            Name = "test.jpg",
+                            PhotoSize = PhotoSize.Small,
+                        }
+                    );
+                }
+                else
+                {
+                    //  Optiene la foto de la galeria
+                    file = await CrossMedia.Current.PickPhotoAsync();
+                }
+            }
+            else
+            {
+                //  Optiene la foto de la galeria
+                file = await CrossMedia.Current.PickPhotoAsync();
+            }
+
+            if (file != null)
+            {
+                ImageSource = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+            }
         }
 
         #endregion Methods

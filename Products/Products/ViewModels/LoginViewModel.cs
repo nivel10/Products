@@ -1,5 +1,6 @@
 ﻿namespace Products.ViewModels
 {
+    using System;
     using System.ComponentModel;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
@@ -35,6 +36,11 @@
             }
         }
 
+        public ICommand RegistreNewUserCommand
+        {
+            get { return new RelayCommand(RegistreNewUser); }
+        }
+        
         #endregion
 
         #region Events
@@ -247,6 +253,19 @@
         {
             IsRunning = isRunning;
             IsEnabled = isEnabled;
+        }
+
+        /// <summary>
+        /// Metodo que invoca el formulario NewCustomerView
+        /// </summary>
+        private async void RegistreNewUser()
+        {
+            //  Se optiene una instancia de la MainViewModel (Sigleton)
+            var mainViewModel = MainViewModel.GetInstance();
+            //  Se genera un objeto de la clase NewCustomerViewModel
+            mainViewModel.NewCustomer = new NewCustomerViewModel();
+
+            await navigationService.Navigate("NewCustomerView");
         }
 
         #endregion

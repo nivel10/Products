@@ -46,6 +46,10 @@
                         new EditProductView());
                     break;
 
+                case "NewCustomerView":
+                    await Application.Current.MainPage.Navigation.PushAsync(
+                        new NewCustomerView());
+                    break;
             };
         }
 
