@@ -9,6 +9,8 @@
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
+
         #region Constructor
 
         public DataContext() : base("DefaultConnection")
