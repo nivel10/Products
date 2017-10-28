@@ -265,7 +265,7 @@
             //  Se genera un objeto de la clase NewCustomerViewModel
             mainViewModel.NewCustomer = new NewCustomerViewModel();
 
-            await navigationService.NavigateOnMaster("NewCustomerView");
+            await navigationService.NavigateOnLogin("NewCustomerView");
         }
 
         #endregion

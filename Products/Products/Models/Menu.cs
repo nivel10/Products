@@ -2,7 +2,7 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Products.Services;
-    using System;
+    using Products.ViewModels;
     using System.Windows.Input;
 
     public class Menu
@@ -32,11 +32,27 @@
 
         #endregion Properties
 
+        #region Constructor
+
+        public Menu()
+        {
+            //  Instancia un objeto de la clase (Service)
+            navigationService = new NavigationService();
+        }
+
+        #endregion Constructor
+
         #region Methods
 
         private void Navigate()
         {
-            throw new NotImplementedException();
+            switch (PageName)
+            {
+                case "LoginView":
+                    MainViewModel.GetInstance().Login = new LoginViewModel();
+                    navigationService.SetMainPage("LoginView");
+                    break;
+            }
         } 
 
         #endregion Methods
