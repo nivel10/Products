@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:pages="clr-namespace:Products.Views"
+                  x:Class="Products.Views.MasterView">
+    
+    <!--Crea la siguiente propiedad para definir el origen de las paginas-->
+    <!--xmlns:pages="clr-namespace:Products.Views"-->
+    
+    <!--Asigna a la MasterDetailPage el MenuView-->
+    <MasterDetailPage.Master>
+        <pages:MenuView/>
+    </MasterDetailPage.Master>
+
+    <!--Asigna el DetailPage-->
+    <MasterDetailPage.Detail>
+        <NavigationPage BarTextColor="{StaticResource FontColor}"
+                        BarBackgroundColor="{StaticResource MainColor}"
+                        x:Name="Navigator">
+            
+            <!--Aqui Define la Pagina Home del MasterView-->
+            <x:Arguments>
+                <pages:CategoriesView/>
+            </x:Arguments>
+            
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+
+</MasterDetailPage>

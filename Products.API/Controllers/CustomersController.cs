@@ -245,14 +245,17 @@
             try
             {
                 //  Invoa el metodo que valida la creacion del usuario
-                if (CreateUserASP(customer.Email, customer.Password))
-                {
-                    await db.SaveChangesAsync();
-                }
-                else
-                {
-                    return BadRequest("Error to create user, try later...!!!");
-                }
+                //if (CreateUserASP(customer.Email, customer.Password))
+                //{
+                //    await db.SaveChangesAsync();
+                //}
+                //else
+                //{
+                //    return BadRequest("Error to create user, try later...!!!");
+                //}
+                CreateUserASP(customer.Email, customer.Password);
+                await db.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {

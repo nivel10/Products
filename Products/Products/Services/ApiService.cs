@@ -1,14 +1,14 @@
 ﻿namespace Products.Services
 {
+    using Newtonsoft.Json;
+    using Plugin.Connectivity;
+    using Products.Models;
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
     using System.Threading.Tasks;
-    using Newtonsoft.Json;
-    using Plugin.Connectivity;
-    using Products.Models;
 
     public class ApiService
     {
@@ -147,7 +147,10 @@
                 //  Deserealiza el objeto
                 var request = JsonConvert.SerializeObject(model);
                 //  Crea el StringContent
-                var content = new StringContent(request, Encoding.UTF8, "application/json");
+                var content = new StringContent(
+                    request, 
+                    Encoding.UTF8, 
+                    "application/json");
                 //  Crea el objeto HttpClient
                 var client = new HttpClient();
                 //  Define la autenticacion del Token
