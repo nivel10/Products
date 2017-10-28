@@ -7,6 +7,54 @@
              Title="Menu">
     
     <ContentPage.Content>
+        <StackLayout Padding="10,30">
+
+            <Label FontAttributes="Bold"
+                   FontSize="Large"
+                   Text="Products"
+                   TextColor="{StaticResource BackGroundColor}"/>
+
+            <ListView BackgroundColor="{StaticResource FontColor}"
+                      ItemsSource="{Binding MyMenu}"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            
+                            <Grid>
+
+                                <!--GestureRecognizer, debe ir en el contexto de dato (Modelo Menu)-->
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateCommand}"/>
+                                </Grid.GestureRecognizers>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Icono-->
+                                <Image Grid.Column="0"
+                                       Grid.Row="0"
+                                       HeightRequest="50"
+                                       Source="{Binding Icon}"
+                                       WidthRequest="50"/>
+                                
+                                <!--Title-->
+                                <Label Grid.Column="1"
+                                       Grid.Row="0"
+                                       Text="{Binding Title}"
+                                       TextColor="{StaticResource BackGroundColor}"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                            
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackLayout>
     </ContentPage.Content>
     
 </ContentPage>

@@ -1,5 +1,4 @@
-﻿
-namespace Products.Views
+﻿namespace Products.Views
 {
     using Xamarin.Forms;
     using Xamarin.Forms.Xaml;
@@ -18,6 +17,10 @@ namespace Products.Views
         {
             base.OnAppearing();
             App.Navigator = Navigator;
+
+            //  Esta propiedad hace que se oculte el menu de manera automatica
+            //  Cuando se selecciona una opcion del mismo
+            App.Master = this;
         }
     }
 }

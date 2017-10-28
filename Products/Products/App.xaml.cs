@@ -11,16 +11,23 @@
             internal set;
         }
 
+        //  Propiedad que oculta el menu de manera automatica
+        public static MasterView Master
+        {
+            get;
+            internal set;
+        }
+
         public App()
         {
             InitializeComponent();
 
             //  MainPage = new Products.MainPage();
             //  MainPage = new LoginView();
-            //  MainPage = new NavigationPage(new LoginView());
+            MainPage = new NavigationPage(new LoginView());
 
             //  El inicio por el MasterView se aplica para usar el Menu Hamburguesa
-            MainPage = new MasterView();
+            //  MainPage = new MasterView();
         }
 
         protected override void OnStart()

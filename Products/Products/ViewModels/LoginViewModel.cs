@@ -1,10 +1,9 @@
 ﻿namespace Products.ViewModels
 {
-    using System;
-    using System.ComponentModel;
-    using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Services;
+    using System.ComponentModel;
+    using System.Windows.Input;
 
     public class LoginViewModel : INotifyPropertyChanged
     {
@@ -241,7 +240,8 @@
             //  PushAsync = Apilar
             //  PopAsync = Desapilar
             //  await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
-            await navigationService.Navigate("CategoriesView");
+            //  await navigationService.Navigate("CategoriesView");
+            navigationService.SetMainPage("MasterView");
         }
 
         /// <summary>
@@ -265,7 +265,7 @@
             //  Se genera un objeto de la clase NewCustomerViewModel
             mainViewModel.NewCustomer = new NewCustomerViewModel();
 
-            await navigationService.Navigate("NewCustomerView");
+            await navigationService.NavigateOnMaster("NewCustomerView");
         }
 
         #endregion

@@ -352,9 +352,10 @@
             //  Genera un objeto de la clase CategoriesViewModel
             mainViewModel.Categories = new CategoriesViewModel();
             //  Hace una navegacion Back (PopAsync)
-            await navigationService.Back();
+            await navigationService.BackOnLogin();
             //  Navega al CategoryView
-            await navigationService.Navigate("CategoriesView");
+            //  await navigationService.NavigateOnMaster("CategoriesView");
+            navigationService.SetMainPage("MasterView");
 
             //  Detiene el ActivityIndicator
             SetEnabledDisable(false, true);
@@ -365,7 +366,7 @@
         /// </summary>
         private async void Back()
         {
-            await navigationService.Back();
+            await navigationService.BackOnLogin();
         }
 
         /// <summary>

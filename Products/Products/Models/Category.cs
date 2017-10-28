@@ -1,10 +1,10 @@
 ﻿namespace Products.Models
 {
-    using System.Collections.Generic;
-    using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Services;
     using Products.ViewModels;
+    using System.Collections.Generic;
+    using System.Windows.Input;
 
     public class Category
     {
@@ -76,7 +76,8 @@
             //  PushAsync() = Apilar Paginas
             //  PopAsync() = Desapila paginas
             //  Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
-            await navigationService.Navigate("ProductsView");
+            //  await navigationService.Navigate("ProductsView");
+            await navigationService.NavigateOnMaster("ProductsView");
         }
 
         /// <summary>
@@ -92,7 +93,8 @@
             //  PushAsync() = Apilar Paginas
             //  PopAsync() = Desapila paginas
             //  Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
-            await navigationService.Navigate("EditCategoryView");
+            //  await navigationService.Navigate("EditCategoryView");
+            await navigationService.NavigateOnMaster("EditCategoryView");
         }
 
         /// <summary>

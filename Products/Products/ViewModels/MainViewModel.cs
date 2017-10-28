@@ -1,9 +1,10 @@
 ﻿namespace Products.ViewModels
 {
-    using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Products.Models;
     using Products.Services;
+    using System.Collections.ObjectModel;
+    using System.Windows.Input;
 
     public class MainViewModel
     {
@@ -76,6 +77,12 @@
             set;
         }
 
+        public ObservableCollection<Menu> MyMenu
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Commands
@@ -105,6 +112,9 @@
             //  Instancia del MainViewModel (Se aplica para el Sigleton)
             _instance = this;
 
+            //  Crea el menu del App
+            LoadMenu();
+
         }
 
         #endregion
@@ -133,7 +143,7 @@
             NewCategory = new NewCategoryViewModel();
 
             //  Invoca el servicio de navegacion
-            await navigationService.Navigate("NewCategoryView");
+            await navigationService.NavigateOnMaster("NewCategoryView");
         }
 
         private async void GoNewProduct()
@@ -142,7 +152,38 @@
             NewProduct = new NewProductViewModel();
 
             //  Invoca el servicio de nqvegacion
-            await navigationService.Navigate("NewProductView");
+            await navigationService.NavigateOnMaster("NewProductView");
+        }
+
+        /// <summary>
+        ///     Metodo que dibuja el menu
+        /// </summary>
+        private void LoadMenu()
+        {   
+            //  Instancia el objeto del Observable Collection<Menu>
+            MyMenu = new ObservableCollection<Menu>();
+
+            //  Asigna los Menu al Objeto
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_settings.png",
+                PageName = "MyProfileView",
+                Title = "My Profile",
+            });
+
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_map.png",
+                PageName = "UbicationsView",
+                Title = "Ubications",
+            });
+
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_exit_to_app.png",
+                PageName = "LoginView",
+                Title = "Close sesion",
+            });
         }
 
         #endregion

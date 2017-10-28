@@ -196,7 +196,8 @@
                     category.Description.Trim()));
 
             //  Retorna a la pagina anterior
-            await navigationService.Back();
+            //  await navigationService.Back();
+            await navigationService.BackOnMaster();
         }
 
         /// <summary>
@@ -212,7 +213,8 @@
 
         private async void Back()
         {
-            await navigationService.Back();
+            //  await navigationService.Back();
+            await navigationService.BackOnMaster();
         }
 
         #endregion

@@ -383,7 +383,7 @@
                     product.Description.Trim()));
 
             //  Navega a la pagina anterior
-            await navigationService.Back();
+            Back();
         }
 
         /// <summary>
@@ -391,7 +391,8 @@
         /// </summary>
         private async void Back()
         {
-            await navigationService.Back();
+            //  await navigationService.Back();
+            await navigationService.BackOnMaster();
         }
 
         /// <summary>

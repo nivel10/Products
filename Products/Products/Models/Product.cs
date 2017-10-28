@@ -86,7 +86,7 @@
             //  PushAsync() = Apilar Paginas
             //  PopAsync() = Desapila paginas
             //  Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
-            await navigationService.Navigate("EditProductView");
+            await navigationService.NavigateOnMaster("EditProductView");
         }
 
         public override int GetHashCode()
