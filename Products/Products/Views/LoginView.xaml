@@ -11,7 +11,7 @@
             <StackLayout BindingContext="{Binding Login}"
                          Padding="8"
                          Spacing="14">
-
+                
                 <Label FontAttributes="Bold"
                        FontSize="Large"
                        HorizontalOptions="Center"

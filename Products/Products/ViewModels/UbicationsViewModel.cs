@@ -31,8 +31,10 @@
 
         public UbicationsViewModel()
         {
+            //  Carga la instancia para el Sigleton
             instance = this;
 
+            //  Instancia las las clases de Servicio
             apiService = new ApiService();
             dialogService = new DialogService();
         }

@@ -1,6 +1,9 @@
 ﻿namespace Products.Views
 {
+    using System;
+    using System.Threading.Tasks;
     using Products.Services;
+    using Products.ViewModels;
     using Xamarin.Forms;
     using Xamarin.Forms.Xaml;
     //  using Xamarin.Forms.Maps;
@@ -28,6 +31,10 @@
             MoveMapToCurrentPosition();
         }
 
+        #endregion Constructor
+
+        #region Methods
+
         private async void MoveMapToCurrentPosition()
         {
             //  Invoca el metodo en el servicio GeoLocatorService
@@ -45,9 +52,28 @@
                 //    position,
                 //    Distance.FromKilometers(.5)));
 
+                //  Metodo que carga los Pin's
+                await LoadPins();
             }
         }
 
-        #endregion Constructor
+        /// <summary>
+        /// Metodo que hace la carga de pines
+        /// </summary>
+        /// <returns></returns>
+        private async Task LoadPins()
+        {
+            //  Optiene una instancia del UbicationsViewModel
+            var ubicationsViewModel = UbicationsViewModel.GetInstance();
+            //  Invoca el metodo que hace la carga de los Pin's
+            await ubicationsViewModel.LoadPins();
+            ////  Se pintan los pines en el mapa
+            //foreach (var pin in ubicationsViewModel.Pins)
+            //{
+            //    MyMap.Pins.Add(pin);
+            //}
+        }
+
+        #endregion Methods
     }
 }

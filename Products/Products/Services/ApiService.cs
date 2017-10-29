@@ -55,9 +55,10 @@
         /// <param name="urlBase">String Url base</param>
         /// <param name="userName">String user name</param>
         /// <param name="userPassword">String user password</param>
-        public async Task<TokenResponse> GetToken(string urlBase,
-                                             string userName,
-                                             string userPassword)
+        public async Task<TokenResponse> GetToken(
+            string urlBase,                 
+            string userName,                  
+            string userPassword)
         {
             try
             {
