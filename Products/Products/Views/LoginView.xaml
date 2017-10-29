@@ -17,7 +17,7 @@
                        HorizontalOptions="Center"
                        Text="Product"
                        TextColor="{StaticResource FontColor}"/>
-
+                
                 <!-- Definition Grid-->
                 <Grid Margin="50,10">
                     <Grid.ColumnDefinitions>

@@ -1,8 +1,7 @@
 ﻿namespace Products.Services
 {
-    using System;
-    using System.Threading.Tasks;
     using Products.Views;
+    using System.Threading.Tasks;
     using Xamarin.Forms;
 
     public class NavigationService
@@ -94,6 +93,11 @@
                 case "EditProductView":
                     await App.Navigator.PushAsync(
                         new EditProductView());
+                    break;
+
+                case "UbicationsView":
+                    await App.Navigator.PushAsync(
+                        new UbicationsView());
                     break;
             };
         }

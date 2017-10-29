@@ -83,6 +83,12 @@
             set;
         }
 
+        public UbicationsViewModel Ubications
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Commands

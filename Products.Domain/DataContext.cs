@@ -11,6 +11,8 @@
 
         public DbSet<Customer> Customers { get; set; }
 
+        public DbSet<Ubication> Ubications { get; set; }
+
         #region Constructor
 
         public DataContext() : base("DefaultConnection")
