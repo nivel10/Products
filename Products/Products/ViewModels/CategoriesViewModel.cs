@@ -72,7 +72,9 @@
                 if (value != _isRefreshing)
                 {
                     _isRefreshing = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRefreshing)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsRefreshing)));
                 }
             }
         }
@@ -116,7 +118,7 @@
 
             //  Optine una lista de categorias List<Category>
             var response = await apiService.GetList<Category>(
-                "http://productszuluapi.azurewebsites.net",
+                "http://chejconsultor.ddns.net:9015",
                 "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,
@@ -209,7 +211,7 @@
             //  Invoca el metodo aue hqce el insert de datos (Put)
             //  Put = Verbo que hace referencia modificar
             var response = await apiService.Delete(
-                "http://productszuluapi.azurewebsites.net",
+                "http://chejconsultor.ddns.net:9015",
                 "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,
@@ -235,7 +237,9 @@
             //  ActivityIndicator del View
             IsRefreshing = false;
 
-            await dialogService.ShowMessage("Information", "Category is deleted...!!!");
+            await dialogService.ShowMessage(
+                "Information", 
+                "Category is deleted...!!!");
         }
 
         #endregion Methods

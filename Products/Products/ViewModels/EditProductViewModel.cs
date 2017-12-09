@@ -239,15 +239,15 @@
         /// Metodo que hace la carga de datos en los controles
         /// </summary>
         /// <param name="product">Objeto Product</param>
-        private void LoadProduct(Product product)
+        private void LoadProduct(Product loadProduct)
         {
-            Description = product.Description;
-            Price = product.Price.ToString().Trim();
-            ImageSource = product.ImageFullPath;
-            IsActive = product.IsActive;
-            LastPurchase = product.LastPurchase;
-            Stock = product.Stock.ToString().Trim();
-            Remarks = product.Remarks;
+            Description = loadProduct.Description;
+            Price = loadProduct.Price.ToString().Trim();
+            ImageSource = loadProduct.ImageFullPath;
+            IsActive = loadProduct.IsActive;
+            LastPurchase = loadProduct.LastPurchase;
+            Stock = loadProduct.Stock.ToString().Trim();
+            Remarks = loadProduct.Remarks;
         }
 
         /// <summary>
@@ -349,7 +349,7 @@
 
             //  Invoca el metodo Apiservice Update
             var response = await apiService.Put(
-                "http://productszuluapi.azurewebsites.net",
+                "http://chejconsultor.ddns.net:9015",
                 "/api",
                 "/Products",
                 mainViewModel.Token.TokenType,

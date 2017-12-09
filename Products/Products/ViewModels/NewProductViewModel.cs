@@ -72,7 +72,9 @@
                 if (value != _description)
                 {
                     _description = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Description)));
                 }
             }
         }
@@ -88,7 +90,9 @@
                 if (value != _price)
                 {
                     _price = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Price)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Price)));
                 }
             }
         }
@@ -104,7 +108,9 @@
                 if (value != _isActive)
                 {
                     _isActive = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsActive)));
                 }
             }
         }
@@ -120,7 +126,9 @@
                 if (value != _lastPurchase)
                 {
                     _lastPurchase = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LastPurchase)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(LastPurchase)));
                 }
             }
         }
@@ -136,7 +144,9 @@
                 if (value != _stock)
                 {
                     _stock = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Stock)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Stock)));
                 }
             }
         }
@@ -152,7 +162,9 @@
                 if (value != _remarks)
                 {
                     _remarks = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Remarks)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Remarks)));
                 }
             }
         }
@@ -168,7 +180,9 @@
                 if (value != _image)
                 {
                     _image = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Image)));
                 }
             }
         }
@@ -184,7 +198,9 @@
                 if (value != _isRunnig)
                 {
                     _isRunnig = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRunning)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsRunning)));
                 }
             }
         }
@@ -200,7 +216,9 @@
                 if (value != _isEnabled)
                 {
                     _isEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnabled)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsEnabled)));
                 }
             }
         }
@@ -216,7 +234,9 @@
                 if (value != _imageSource)
                 {
                     _imageSource = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ImageSource)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(ImageSource)));
                 }
             }
         }
@@ -240,7 +260,7 @@
 
             //  Coloca el recurso (Imagen) NoImage
             //  Image = "noimage.png";
-            ImageSource = "noimage.png";
+            ImageSource = "NoImage.png";
 
             //  Instancia los servicios
             dialogService = new DialogService();
@@ -347,7 +367,7 @@
 
             //  Invoca el metodo que hace el insert de datos (Api)
             var response = await apiService.Post(
-                "http://productszuluapi.azurewebsites.net",
+                "http://chejconsultor.ddns.net:9015",
                 "/api",
                 "/Products",
                 mainViewModel.Token.TokenType,

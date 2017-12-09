@@ -53,11 +53,14 @@
                 //  Una imagen que esta en la carpeta de recursos locales
                 if (string.IsNullOrEmpty(Image))
                 {
-                    return "noimage.png";
+                    return string.Format(
+                        "{0}{1}", 
+                        "http://chejconsultor.ddns.net:9015",
+                        "/Content/Images/NoImage.png");
                 }
 
                 return string.Format(
-                    "http://productszuluapi.azurewebsites.net/{0}",
+                    "http://chejconsultor.ddns.net:9015{0}",
                     Image.Substring(1));
             }
         }

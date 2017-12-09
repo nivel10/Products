@@ -147,7 +147,7 @@
         public LoginViewModel()
         {
             //  Eliminar
-            Email = "jzuluaga55@gmail.com";
+            Email = "carlos.e.herrera.j@gmail.com";
             Password = "123456";
 
             //  Inicializacion de datos
@@ -198,7 +198,7 @@
 
             //  Valida si se puede optenet el Token
             var tokenResponse = await apiService.GetToken(
-                "http://productszuluapi.azurewebsites.net",
+                "http://chejconsultor.ddns.net:9015",
                 Email,
                 Password);
             if (tokenResponse == null)

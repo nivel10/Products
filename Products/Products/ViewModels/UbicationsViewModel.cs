@@ -74,7 +74,7 @@
 
             //  Consume el ApiService
             var response = await apiService.GetList<Ubication>(
-                "http://productszuluapi.azurewebsites.net",
+                "http://chejconsultor.ddns.net:9015",
                 "/api",
                 "/Ubications",
                 mainViewModel.Token.TokenType,

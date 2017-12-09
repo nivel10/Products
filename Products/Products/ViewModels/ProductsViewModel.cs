@@ -56,7 +56,9 @@
                 if (value != _isRefreshing)
                 {
                     _isRefreshing = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRefreshing)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsRefreshing)));
                 }
             }
         }
@@ -77,7 +79,8 @@
 
             //  Genra el ObservableCollection de ProductsList y ordena los datos
             ProductsList =
-                new ObservableCollection<Product>(products.OrderBy(p => p.Description));
+                new ObservableCollection<Product>(
+                    products.OrderBy(p => p.Description));
         }
 
         #endregion Constructor

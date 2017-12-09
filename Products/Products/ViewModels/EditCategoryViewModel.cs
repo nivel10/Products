@@ -165,7 +165,7 @@
             //  Invoca el metodo aue hqce el insert de datos (Put)
             //  Put = Verbo que hace referencia modificar
             var response = await apiService.Put(
-                "http://productszuluapi.azurewebsites.net",
+                "http://chejconsultor.ddns.net:9015",
                 "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,

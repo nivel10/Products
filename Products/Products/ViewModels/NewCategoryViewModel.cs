@@ -155,7 +155,7 @@
             //  Invoca el metodo aue hqce el insert de datos (Post)
             //  Post = Verbo que hacer referencia agregar, adicionar
             var response = await apiService.Post(
-                "http://productszuluapi.azurewebsites.net",
+                "http://chejconsultor.ddns.net:9015",
                 "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,

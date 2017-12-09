@@ -50,7 +50,9 @@
                 if (value != _firstName)
                 {
                     _firstName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FirstName)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(FirstName)));
                 }
             }
         }
@@ -66,7 +68,9 @@
                 if (value != _lastName)
                 {
                     _lastName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LastName)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(LastName)));
                 }
             }
         }
@@ -82,7 +86,9 @@
                 if (value != _email)
                 {
                     _email = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Email)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Email)));
                 }
             }
         }
@@ -98,7 +104,9 @@
                 if (value != _phone)
                 {
                     _phone = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Phone)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Phone)));
                 }
             }
         }
@@ -114,7 +122,9 @@
                 if (value != _address)
                 {
                     _address = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Address)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Address)));
                 }
             }
         }
@@ -130,7 +140,9 @@
                 if (value != _password)
                 {
                     _password = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Password)));
                 }
             }
         }
@@ -146,7 +158,9 @@
                 if (value != _confirm)
                 {
                     _confirm = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Confirm)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Confirm)));
                 }
             }
         }
@@ -162,7 +176,9 @@
                 if (value != _isEnabled)
                 {
                     _isEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnabled)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsEnabled)));
                 }
             }
         }
@@ -178,7 +194,9 @@
                 if (value != _isRunning)
                 {
                     _isRunning = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRunning)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsRunning)));
                 }
             }
         }
@@ -224,22 +242,30 @@
             //  Valida los controles del formulario
             if (string.IsNullOrEmpty(FirstName))
             {
-                await dialogService.ShowMessage("Error", "You must enter a first name...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "You must enter a first name...!!!");
                 return;
             }
             if (string.IsNullOrEmpty(LastName))
             {
-                await dialogService.ShowMessage("Error", "You must enter a last name...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "You must enter a last name...!!!");
                 return;
             }
             if (string.IsNullOrEmpty(Email))
             {
-                await dialogService.ShowMessage("Error", "You must a email...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "You must a email...!!!");
                 return;
             }
             if (!RegexUtilities.IsValidEmail(Email))
             {
-                await dialogService.ShowMessage("Error", "You must enter a valid email...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "You must enter a valid email...!!!");
                 return;
             }
             //  Son datos no obligatorios
@@ -255,27 +281,37 @@
             //}
             if (string.IsNullOrEmpty(Password))
             {
-                await dialogService.ShowMessage("Error", "You must enter a password...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "You must enter a password...!!!");
                 return;
             }
             if (Password.Length < 6)
             {
-                await dialogService.ShowMessage("Error", "The password must have at least 6 characters length...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "The password must have at least 6 characters length...!!!");
                 return;
             }
             if (string.IsNullOrEmpty(Confirm))
             {
-                await dialogService.ShowMessage("Error", "You must enter a password confirm...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "You must enter a password confirm...!!!");
                 return;
             }
             if (Confirm.Length < 6)
             {
-                await dialogService.ShowMessage("Error", "The password confirm must hace at least 6 characters length...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "The password confirm must hace at least 6 characters length...!!!");
                 return;
             }
             if (!Password.Equals(Confirm))
             {
-                await dialogService.ShowMessage("Error", "The password and confirm, does not match...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "The password and confirm, does not match...!!!");
                 return;
             }
 
@@ -306,7 +342,7 @@
 
             //  Invoca el Post (Insert) del API
             var response = await apiService.Post(
-                "http://productszuluapi.azurewebsites.net/",
+                "http://chejconsultor.ddns.net:9015",
                 "/api",
                 "/Customers",
                 customer);
@@ -322,7 +358,7 @@
 
             //  Optiene el Token de acceso del usuario ya crreado
             var response2 = await apiService.GetToken(
-                "http://productszuluapi.azurewebsites.net/",
+                "http://chejconsultor.ddns.net:9015",
                 Email,
                 Password);
 
@@ -332,7 +368,9 @@
                 //  Detiene el ActivityIndicator
                 SetEnabledDisable(false, true);
                 Password = null;
-                await dialogService.ShowMessage("Error", "The service is not available, please try latter...!!!");
+                await dialogService.ShowMessage(
+                    "Error", 
+                    "The service is not available, please try latter...!!!");
                 return;
             }
 
