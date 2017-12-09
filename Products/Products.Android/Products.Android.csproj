@@ -172,6 +172,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\ic_add_circle.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ic_add_circle.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_add_circle.png" />
+    <AndroidResource Include="Resources\drawable\NoImage.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

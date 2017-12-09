@@ -117,6 +117,7 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <BundleResource Include="Resources\ic_chevron_right.png" />
     <BundleResource Include="Resources\ic_add_circle.png" />
+    <BundleResource Include="Resources\NoImage.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin.Permissions, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -168,9 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_action_add_circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\noimage.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_exit_to_app.png" />

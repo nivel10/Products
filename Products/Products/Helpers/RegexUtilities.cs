@@ -3,8 +3,13 @@
     using System;
     using System.Text.RegularExpressions;
 
-    public class RegexUtilities
+    public static class RegexUtilities
     {
+        /// <summary>
+        /// Metodo que valida el email (La structura)
+        /// </summary>
+        /// <returns><c>true</c>, if valid email was ised, <c>false</c> otherwise.</returns>
+        /// <param name="email">String Email.</param>
         public static bool IsValidEmail(string email)
         {
             var expresion = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";

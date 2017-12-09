@@ -260,11 +260,11 @@
         /// </summary>
         private async void RegistreNewUser()
         {
-            //  Se optiene una instancia de la MainViewModel (Sigleton)
-            var mainViewModel = MainViewModel.GetInstance();
-            //  Se genera un objeto de la clase NewCustomerViewModel
-            mainViewModel.NewCustomer = new NewCustomerViewModel();
+            //  Genera una instancia de la clase NewCustomerViewModel
+            //  A traves del Sigleton
+            MainViewModel.GetInstance().NewCustomer = new NewCustomerViewModel();
 
+            //  Navega a la NewCustomerView
             await navigationService.NavigateOnLogin("NewCustomerView");
         }
 

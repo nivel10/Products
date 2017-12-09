@@ -31,6 +31,8 @@
         private string _image;
         private ImageSource _imageSource;
         private MediaFile file;
+        private decimal price;
+        private double stock;
 
         #endregion
 
@@ -286,47 +288,51 @@
                 return;
             }
 
-            if (string.IsNullOrEmpty(Price))
+            // Valida si esta activo o no el producto
+            if(IsActive == true)
             {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product price...!!!");
-                return;
+                if (string.IsNullOrEmpty(Price))
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "You must enter a product price...!!!");
+                    return;
+                }
+
+                price = 0.0m;
+                if (!decimal.TryParse(Price, out price))
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "You must enter a product price in numeric value...!!!");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(Stock))
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "You must enter a product stock...!!!");
+                    return;
+                }
+
+                stock = 0.00;
+                if (!double.TryParse(Stock, out stock))
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "You must enter a product stock in numeric value...!!!");
+                    return;
+                }
             }
 
-            decimal price = 0.0m;
-            if (!decimal.TryParse(Price, out price))
-            {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product price in numeric value...!!!");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(Stock))
-            {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product stock...!!!");
-                return;
-            }
-
-            double stock = 0.00;
-            if (!double.TryParse(Stock, out stock))
-            {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product stock in numeric value...!!!");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(Remarks))
-            {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product remarks...!!!");
-                return;
-            }
+            //if (string.IsNullOrEmpty(Remarks))
+            //{
+            //    await dialogService.ShowMessage(
+            //        "Error",
+            //        "You must enter a product remarks...!!!");
+            //    return;
+            //}
 
             //  Habilita el ActivityIndicator
             SetEnabledDisable(true, false);
