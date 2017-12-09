@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
@@ -7,7 +7,8 @@
 
     <ContentPage.Content>
 
-        <ScrollView BindingContext="{Binding NewCustomer}">
+        <ScrollView BindingContext="{Binding NewCustomer}"
+                    Margin="10,10">
             <StackLayout Padding="10">
 
                 <!--Grid-->
@@ -63,6 +64,7 @@
                     <Entry Grid.Column="1"
                            Grid.Row="3"
                            IsEnabled="{Binding IsEnabled}"
+                           Keyboard="Telephone"
                            Placeholder="Entry your number phone...!!!"
                            Text="{Binding Phone, Mode=TwoWay}"
                            VerticalOptions="FillAndExpand"/>
@@ -115,20 +117,24 @@
                              VerticalOptions="EndAndExpand">
 
                     <Button BackgroundColor="Navy"
-                            BorderRadius="25"
                             Command="{Binding SaveCommand}"
+                            FontAttributes="Bold"
                             HeightRequest="50"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Margin="10,0"
                             Text="Save"
-                            TextColor="White"/>
+                            TextColor="White"
+                            WidthRequest="70"/>
 
                     <Button BackgroundColor="Green"
-                            BorderRadius="25"
                             Command="{Binding BackCommand}"
+                            FontAttributes="Bold"
                             HeightRequest="50"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Margin="10,0"
                             Text="Back"
-                            TextColor="White"/>
+                            TextColor="White"
+                            WidthRequest="70"/>
                     
                 </StackLayout>
 

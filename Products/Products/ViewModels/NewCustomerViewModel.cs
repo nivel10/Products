@@ -6,6 +6,7 @@
     using Products.Services;
     using System.ComponentModel;
     using System.Windows.Input;
+    using System.Threading.Tasks;
 
     public class NewCustomerViewModel : INotifyPropertyChanged
     {
@@ -239,79 +240,10 @@
         /// </summary>
         private async void save()
         {
-            //  Valida los controles del formulario
-            if (string.IsNullOrEmpty(FirstName))
+            //  Invoca el metodo que valida los campos del fomulario
+            var isValidFields = await IsValidFields(false);
+            if(!isValidFields)
             {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "You must enter a first name...!!!");
-                return;
-            }
-            if (string.IsNullOrEmpty(LastName))
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "You must enter a last name...!!!");
-                return;
-            }
-            if (string.IsNullOrEmpty(Email))
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "You must a email...!!!");
-                return;
-            }
-            if (!RegexUtilities.IsValidEmail(Email))
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "You must enter a valid email...!!!");
-                return;
-            }
-            //  Son datos no obligatorios
-            //if (string.IsNullOrEmpty(Phone))
-            //{
-            //    await dialogService.ShowMessage("Error", "You must enter a phone...!!!");
-            //    return;
-            //}
-            //if (string.IsNullOrEmpty(Address))
-            //{
-            //    await dialogService.ShowMessage("Error", "You must enter a address...!!!");
-            //    return;
-            //}
-            if (string.IsNullOrEmpty(Password))
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "You must enter a password...!!!");
-                return;
-            }
-            if (Password.Length < 6)
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "The password must have at least 6 characters length...!!!");
-                return;
-            }
-            if (string.IsNullOrEmpty(Confirm))
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "You must enter a password confirm...!!!");
-                return;
-            }
-            if (Confirm.Length < 6)
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "The password confirm must hace at least 6 characters length...!!!");
-                return;
-            }
-            if (!Password.Equals(Confirm))
-            {
-                await dialogService.ShowMessage(
-                    "Error", 
-                    "The password and confirm, does not match...!!!");
                 return;
             }
 
@@ -324,7 +256,7 @@
             {
                 //  Detiene el ActivityIndicator
                 SetEnabledDisable(false, true);
-                await dialogService.ShowMessage("", connection.Message);
+                await dialogService.ShowMessage("Error", connection.Message);
                 return;
             }
 
@@ -356,7 +288,7 @@
                 return;
             }
 
-            //  Optiene el Token de acceso del usuario ya crreado
+            //  Optiene el Token de acceso del usuario ya creado
             var response2 = await apiService.GetToken(
                 "http://chejconsultor.ddns.net:9015",
                 Email,
@@ -386,6 +318,7 @@
 
             //  Asigna el Token a la MainViewModel
             var mainViewModel = MainViewModel.GetInstance();
+            //  Envia el Token al MainViewModel (Persistencia)
             mainViewModel.Token = response2;
             //  Genera un objeto de la clase CategoriesViewModel
             mainViewModel.Categories = new CategoriesViewModel();
@@ -416,6 +349,93 @@
         {
             IsRunning = isRunning;
             IsEnabled = isEnabled;
+        }
+
+        /// <summary>
+        /// Ises the valid fields.
+        /// </summary>
+        /// <returns>The valid fields.</returns>
+        /// <param name="isValid">If set to <c>true</c> is valid.</param>
+        private async Task<bool> IsValidFields(bool isValid)
+        {
+            //  Valida los controles del formulario
+            if (string.IsNullOrEmpty(FirstName))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "You must enter a first name...!!!");
+                return isValid;
+            }
+            if (string.IsNullOrEmpty(LastName))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "You must enter a last name...!!!");
+                return isValid;
+            }
+            if (string.IsNullOrEmpty(Email))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "You must a email...!!!");
+                return isValid;
+            }
+            if (!RegexUtilities.IsValidEmail(Email))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "You must enter a valid email...!!!");
+                return isValid;
+            }
+            //  Son datos no obligatorios
+            //if (string.IsNullOrEmpty(Phone))
+            //{
+            //    await dialogService.ShowMessage("Error", "You must enter a phone...!!!");
+            //    return isValid;
+            //}
+            //if (string.IsNullOrEmpty(Address))
+            //{
+            //    await dialogService.ShowMessage("Error", "You must enter a address...!!!");
+            //    return isValid;
+            //}
+            if (string.IsNullOrEmpty(Password))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "You must enter a password...!!!");
+                return isValid;
+            }
+            if (Password.Length < 6)
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "The password must have at least 6 characters length...!!!");
+                return isValid;
+            }
+            if (string.IsNullOrEmpty(Confirm))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "You must enter a password confirm...!!!");
+                return isValid;
+            }
+            if (Confirm.Length < 6)
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "The password confirm must hace at least 6 characters length...!!!");
+                return isValid;
+            }
+            if (!Password.Equals(Confirm))
+            {
+                await dialogService.ShowMessage(
+                    "Error",
+                    "The password and confirm, does not match...!!!");
+                return isValid;
+            }
+
+            isValid = true;
+            return isValid;
         }
 
         #endregion Methods

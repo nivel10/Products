@@ -9,7 +9,8 @@
 
         <ScrollView>
             <StackLayout BindingContext="{Binding NewProduct}"
-                     Padding="10">
+                         Margin="10,10"
+                         Padding="10">
 
                 <!--Grid-->
                 <Grid>
@@ -119,25 +120,27 @@
 
                     <!-- Button -->
                     <Button BackgroundColor="Navy"
-                        BorderRadius="23"
-                        Command="{Binding SaveProductCommand}"
-                        HeightRequest="46"
-                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                        Margin="10,0"
-                        Text="Save"
-                        TextColor="White"
-                        VerticalOptions="EndAndExpand"/>
+                            Command="{Binding SaveProductCommand}"
+                            FontAttributes="Bold"
+                            HeightRequest="46"
+                            IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Margin="10,0"
+                            Text="Save"
+                            TextColor="White"
+                            VerticalOptions="EndAndExpand"
+                            WidthRequest="70"/>
 
                     <!-- Button -->
                     <Button BackgroundColor="Green"
-                        BorderRadius="23"
-                        Command="{Binding BackCommand}"
-                        HeightRequest="46"
-                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                        Margin="10,0"
-                        Text="Back"
-                        TextColor="White"
-                        VerticalOptions="EndAndExpand"/>
+                            Command="{Binding BackCommand}"
+                            FontAttributes="Bold"
+                            HeightRequest="46"
+                            IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Margin="10,0"
+                            Text="Back"
+                            TextColor="White"
+                            VerticalOptions="EndAndExpand"
+                            WidthRequest="70"/>
                 </StackLayout>
 
             </StackLayout>

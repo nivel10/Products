@@ -7,6 +7,7 @@
 
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding NewCategory}"
+                     Margin="10,10"
                      Padding="10">
 
             <Grid>
@@ -36,24 +37,26 @@
                          Orientation="Horizontal">
 
                 <Button Command="{Binding SaveCommand}"
-                    BackgroundColor="Navy"
-                    BorderRadius="23"
-                    HeightRequest="46"
-                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                    Margin="10,0"
-                    TextColor="White"
-                    Text="Save"
-                    VerticalOptions="EndAndExpand"/>
+                        BackgroundColor="Navy"
+                        FontAttributes="Bold"
+                        HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        Margin="10,0"
+                        TextColor="White"
+                        Text="Save"
+                        VerticalOptions="EndAndExpand"
+                        WidthRequest="70"/>
 
                 <Button Command="{Binding BackCommand}"
-                    BackgroundColor="Green"
-                    BorderRadius="23"
-                    HeightRequest="46"
-                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                    Margin="10,0"
-                    TextColor="White"
-                    Text="Back"
-                    VerticalOptions="EndAndExpand"/>
+                        BackgroundColor="Green"
+                        FontAttributes="Bold"
+                        HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        Margin="10,0"
+                        TextColor="White"
+                        Text="Back"
+                        VerticalOptions="EndAndExpand"
+                        WidthRequest="70"/>
 
             </StackLayout>
 

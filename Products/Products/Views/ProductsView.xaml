@@ -14,6 +14,7 @@
     <ContentPage.Content>
 
         <StackLayout BindingContext="{Binding Products}"
+                     Margin="10,10"
                      Padding="5">
 
             <!--Estas propiedades hace el Refresh del View

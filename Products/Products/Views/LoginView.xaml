@@ -9,6 +9,7 @@
 
         <ScrollView>
             <StackLayout BindingContext="{Binding Login}"
+                         Margin="10,10"
                          Padding="8"
                          Spacing="14">
                 

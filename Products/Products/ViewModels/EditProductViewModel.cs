@@ -73,7 +73,9 @@
                 if (value != _description)
                 {
                     _description = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Description)));
                 }
             }
         }
@@ -89,7 +91,9 @@
                 if (value != _price)
                 {
                     _price = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Price)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Price)));
                 }
             }
         }
@@ -105,7 +109,9 @@
                 if (value != _isActive)
                 {
                     _isActive = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsActive)));
                 }
             }
         }
@@ -121,7 +127,9 @@
                 if (value != _lastPurchase)
                 {
                     _lastPurchase = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LastPurchase)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(LastPurchase)));
                 }
             }
         }
@@ -137,7 +145,9 @@
                 if (value != _stock)
                 {
                     _stock = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Stock)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Stock)));
                 }
             }
         }
@@ -153,7 +163,9 @@
                 if (value != _remarks)
                 {
                     _remarks = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Remarks)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Remarks)));
                 }
             }
         }
@@ -169,7 +181,9 @@
                 if (value != _isRunning)
                 {
                     _isRunning = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRunning)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsRunning)));
                 }
             }
         }
@@ -185,7 +199,9 @@
                 if (value != _isEnabled)
                 {
                     _isEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnabled)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(IsEnabled)));
                 }
             }
         }
@@ -203,7 +219,9 @@
                 if (value != _imageSource)
                 {
                     _imageSource = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ImageSource)));
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(ImageSource)));
                 }
             }
         }
@@ -254,7 +272,8 @@
         /// Captura todos los datos en el objeto Product
         /// </summary>
         /// <param name="product">Objeto Product</param>
-        private void LoadValueInProduct(Product product, byte[] imageArray)
+        //  private void LoadValueInProduct(Product product, byte[] imageArray)
+        private void LoadValueInProduct(byte[] imageArray)
         {
             product.Description = Description;
             product.Price = price;
@@ -279,47 +298,51 @@
                 return;
             }
 
-            if (string.IsNullOrEmpty(Price))
+            //  Valida si el producto esta activo
+            if(IsActive == true)
             {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product price...!!!");
-                return;
+                if (string.IsNullOrEmpty(Price))
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "You must enter a product price...!!!");
+                    return;
+                }
+
+                price = 0.0m;
+                if (!decimal.TryParse(Price, out price))
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "You must enter a product price in numeric value...!!!");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(Stock))
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "You must enter a product stock...!!!");
+                    return;
+                }
+
+                stock = 0.0m;
+                if (!decimal.TryParse(Stock, out stock))
+                {
+                    await dialogService.ShowMessage(
+                        "Error",
+                        "You must enter a product stock in numeric value...!!!");
+                    return;
+                }
             }
 
-            price = 0.0m;
-            if (!decimal.TryParse(Price, out price))
-            {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product price in numeric value...!!!");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(Stock))
-            {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product stock...!!!");
-                return;
-            }
-
-            stock = 0.0m;
-            if (!decimal.TryParse(Stock, out stock))
-            {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product stock in numeric value...!!!");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(Remarks))
-            {
-                await dialogService.ShowMessage(
-                    "Error",
-                    "You must enter a product remarks...!!!");
-                return;
-            }
+            //if (string.IsNullOrEmpty(Remarks))
+            //{
+            //    await dialogService.ShowMessage(
+            //        "Error",
+            //        "You must enter a product remarks...!!!");
+            //    return;
+            //}
 
             //  Habilita el ActivityIndicator
             SetEnabledDisable(true, false);
@@ -345,7 +368,8 @@
             }
 
             //  Asigna todos los valores al objeto Product
-            LoadValueInProduct(product, imageArray);
+            //  LoadValueInProduct(product, imageArray);
+            LoadValueInProduct(imageArray);
 
             //  Invoca el metodo Apiservice Update
             var response = await apiService.Put(
