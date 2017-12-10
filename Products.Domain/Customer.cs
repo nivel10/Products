@@ -8,14 +8,17 @@
         [Key]
         public int CustomerId { get; set; }
 
+        [Display(Name = "Customer Type")]
         public int CustomerType { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required.")]
         [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
+        [Display(Name = "Firts Name")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required.")]
         [MaxLength(50, ErrorMessage = "The field {0} only can contain {1} characters lenght.")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required.")]

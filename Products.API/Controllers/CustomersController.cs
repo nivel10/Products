@@ -253,9 +253,10 @@
                 //{
                 //    return BadRequest("Error to create user, try later...!!!");
                 //}
+
+                //  Crea el usuario en las tablas ASP
                 CreateUserASP(customer.Email, customer.Password);
                 await db.SaveChangesAsync();
-
             }
             catch (Exception ex)
             {
@@ -293,7 +294,7 @@
                 UserName = email,
             };
 
-            //  Valida si el metodo genero el usuario
+            //  Valida si el metodo genero el usuario ASP
             var result = userManager.Create(userASP, password);
             if (result.Succeeded)
             {
