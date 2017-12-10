@@ -49,8 +49,12 @@
             switch (PageName)
             {
                 case "LoginView":
-                    MainViewModel.GetInstance().Login = 
+                    //  Inicializa el objeto Login (Email / Password)
+                    MainViewModel.GetInstance().Login =
                         new LoginViewModel();
+                    MainViewModel.GetInstance().Login.Email = null;
+                    MainViewModel.GetInstance().Login.Password = null;
+                    //  Navega al LoginView
                     navigationService.SetMainPage("LoginView");
                     break;
 

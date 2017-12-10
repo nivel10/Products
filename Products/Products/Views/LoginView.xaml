@@ -72,25 +72,28 @@
                 <ActivityIndicator IsRunning="{Binding IsRunning, Mode=TwoWay}" />
 
                 <StackLayout Margin="50,0">
-                    <Button BackgroundColor="{StaticResource AccentColor1}"
+                    <Button BackgroundColor="{StaticResource ButonLogin}"
                             BorderRadius="25"
                             Command="{Binding LoginCommand}"
+                            FontAttributes="Bold"
                             HeightRequest="50"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                             Text="Login"
-                            TextColor="Black"/>
+                            TextColor="White"/>
 
-                    <Button BackgroundColor="{StaticResource AccentColor2}"
+                    <Button BackgroundColor="{StaticResource ButonSaveColor}"
                             BorderRadius="25"
                             Command="{Binding RegistreNewUserCommand}"
+                            FontAttributes="Bold"
                             HeightRequest="50"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                             Text="Registre New User"
                             TextColor="White"/>
 
-                    <Button BackgroundColor="Navy"
+                    <Button BackgroundColor="{StaticResource ButonFaceBookColor}"
                             BorderRadius="25"
                             Command="{Binding LoginWithFacebookCommand}"
+                            FontAttributes="Bold"
                             HeightRequest="50"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                             Text="Login With Facebook"

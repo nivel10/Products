@@ -19,8 +19,10 @@
 
             <!--Estas propiedades hace el Refresh del View
                 Para que se ejecuten debe tener estas dos propiedades
-                IsPullToRefreshEnabled="True" => Hace que el evento de tomar, jalar hacia abajo y soltar de ejecute
-                RefreshCommand="{Binding RefreshCommand}" => Es el command que invoca el methodo en el ViewModel-->
+                IsPullToRefreshEnabled="True" => Hace que el evento de tomar, 
+                jalar hacia abajo y soltar de ejecute
+                RefreshCommand="{Binding RefreshCommand}" 
+                => Es el command que invoca el methodo en el ViewModel-->
 
             <ListView HasUnevenRows="True"
                       IsPullToRefreshEnabled="True"
