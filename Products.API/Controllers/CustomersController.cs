@@ -181,7 +181,9 @@
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()
         {
-            return db.Customers;
+            return db.Customers
+                .OrderBy(c => c.FirstName)
+                .OrderBy(c=> c.LastName);
         }
 
         // GET: api/Customers/5

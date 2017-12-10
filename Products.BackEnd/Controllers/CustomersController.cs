@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Products.BackEnd.Models;
     using Products.Domain;
+    using System.Linq;
 
     public class CustomersController : Controller
     {
@@ -14,7 +15,10 @@
         // GET: Customers
         public async Task<ActionResult> Index()
         {
-            return View(await db.Customers.ToListAsync());
+            return View(await db.Customers
+                .OrderBy(c => c.FirstName)
+                .OrderBy(c => c.LastName)
+                .ToListAsync());
         }
 
         // GET: Customers/Details/5
