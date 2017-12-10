@@ -7,7 +7,7 @@
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-  <!-- EL Nuget que se emplea para verificar el estatus de la conexion necesita los permisos -->
+  <!-- El Nuget que se emplea para verificar el estatus de la conexion necesita los permisos -->
   <!-- Para poder consultar el estado de la conexion en modo debug funciona, en release no -->
   <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -22,7 +22,7 @@
   <application android:label="Products.Android">
     
     <meta-data android:name="com.google.android.maps.v2.API_KEY"
-               android:value="AIzaSyAtxvXVhbzV9OTwZh8UxVsW2A58WYf-Btc" />
+               android:value="AIzaSyCbmqq-_puSEtEdOhbh9RnoJAJ0dqyiKbg" />
     
   </application>
 </manifest>

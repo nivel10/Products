@@ -3,9 +3,9 @@
     using Models;
     using Services;
     using System.Collections.Generic;
-    //  using System.Collections.ObjectModel;
+    using System.Collections.ObjectModel;
     using System.Threading.Tasks;
-    //  using Xamarin.Forms.Maps;
+    using Xamarin.Forms.Maps;
 
     public class UbicationsViewModel
     {
@@ -19,11 +19,11 @@
 
         #region Properties
 
-        //public ObservableCollection<Pin> Pins
-        //{
-        //    get;
-        //    set;
-        //}
+        public ObservableCollection<Pin> Pins
+        {
+            get;
+            set;
+        }
 
         #endregion
 
@@ -91,19 +91,19 @@
 
             //  Caega los datos de los Pins en el objeto
             var ubications = (List<Ubication>)response.Result;
-            //Pins = new ObservableCollection<Pin>();
-            //foreach (var ubication in ubications)
-            //{
-            //    Pins.Add(new Pin
-            //    {
-            //        Address = ubication.Address,
-            //        Label = ubication.Description,
-            //        Position = new Position(
-            //            ubication.Latitude,
-            //            ubication.Longitude),
-            //        Type = PinType.Place,
-            //    });
-            //}
+            Pins = new ObservableCollection<Pin>();
+            foreach (var ubication in ubications)
+            {
+                Pins.Add(new Pin
+                {
+                    Address = ubication.Address,
+                    Label = ubication.Description,
+                    Position = new Position(
+                        ubication.Latitude,
+                        ubication.Longitude),
+                    Type = PinType.Place,
+                });
+            }
         }
 
         #endregion Methods

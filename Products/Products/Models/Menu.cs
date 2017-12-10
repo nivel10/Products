@@ -59,6 +59,7 @@
                     break;
 
                 case "UbicationsView":
+                    //  Genera una nueva instancia de la UbicationsViewModel
                     MainViewModel.GetInstance().Ubications = 
                         new UbicationsViewModel();
                     await navigationService.NavigateOnMaster("UbicationsView");

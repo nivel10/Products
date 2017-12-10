@@ -154,7 +154,8 @@
             switch (pageName)
             {
                 case "LoginView":
-                    Application.Current.MainPage = new NavigationPage(new LoginView());
+                    Application.Current.MainPage = new NavigationPage(
+                        new LoginView());
                     break;
 
                 case "MasterView":

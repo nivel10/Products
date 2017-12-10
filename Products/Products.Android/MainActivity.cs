@@ -1,9 +1,9 @@
-﻿using Android.App;
-using Android.Content.PM;
-using Android.OS;
-
-namespace Products.Droid
+﻿namespace Products.Droid
 {
+    using Android.App;
+    using Android.Content.PM;
+    using Android.OS;
+
     [Activity(Label = "Products", 
         Icon = "@drawable/icon", 
         Theme = "@style/MainTheme",
@@ -21,7 +21,7 @@ namespace Products.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             //  Esta linea se agrega para inicializar las librerias de Maps
-            //  Xamarin.FormsMaps.Init(this, bundle);
+            Xamarin.FormsMaps.Init(this, bundle);
 
             LoadApplication(new App());
         }

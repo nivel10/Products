@@ -1,12 +1,11 @@
 ﻿namespace Products.Views
 {
-    using System;
     using System.Threading.Tasks;
     using Products.Services;
     using Products.ViewModels;
     using Xamarin.Forms;
     using Xamarin.Forms.Xaml;
-    //  using Xamarin.Forms.Maps;
+    using Xamarin.Forms.Maps;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UbicationsView : ContentPage
@@ -43,17 +42,17 @@
                 geolocatorService.Longitude != 0)
             {
                 //  Asigna la posicion a la variable position
-                //var position = new Position(
-                //geolocatorService.Latitude,
-                //geolocatorService.Longitude);
+                var position = new Position(
+                    geolocatorService.Latitude,
+                    geolocatorService.Longitude);
 
                 //  Mueve el mapa a la ubicacion asignada
-                //MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(
-                //    position,
-                //    Distance.FromKilometers(.5)));
+                MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(
+                    position,
+                    Distance.FromKilometers(1)));
 
                 //  Metodo que carga los Pin's
-                await LoadPins();
+                // await LoadPins();
             }
         }
 
@@ -67,11 +66,11 @@
             var ubicationsViewModel = UbicationsViewModel.GetInstance();
             //  Invoca el metodo que hace la carga de los Pin's
             await ubicationsViewModel.LoadPins();
-            ////  Se pintan los pines en el mapa
-            //foreach (var pin in ubicationsViewModel.Pins)
-            //{
-            //    MyMap.Pins.Add(pin);
-            //}
+            //  Se pintan los pines en el mapa
+            foreach (var pin in ubicationsViewModel.Pins)
+            {
+                MyMap.Pins.Add(pin);
+            }
         }
 
         #endregion Methods
