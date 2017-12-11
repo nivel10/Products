@@ -373,7 +373,7 @@
 
             //  Invoca el metodo Apiservice Update
             var response = await apiService.Put(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 "/api",
                 "/Products",
                 mainViewModel.Token.TokenType,

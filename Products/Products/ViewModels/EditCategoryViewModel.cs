@@ -5,6 +5,7 @@
     using Products.Services;
     using System.ComponentModel;
     using System.Windows.Input;
+    using Products.Helpers;
 
     public class EditCategoryViewModel : INotifyPropertyChanged
     {
@@ -165,7 +166,7 @@
             //  Invoca el metodo aue hqce el insert de datos (Put)
             //  Put = Verbo que hace referencia modificar
             var response = await apiService.Put(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,

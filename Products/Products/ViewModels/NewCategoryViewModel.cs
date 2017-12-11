@@ -3,6 +3,7 @@
     using System.ComponentModel;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
+    using Products.Helpers;
     using Products.Models;
     using Products.Services;
 
@@ -155,7 +156,7 @@
             //  Invoca el metodo aue hqce el insert de datos (Post)
             //  Post = Verbo que hacer referencia agregar, adicionar
             var response = await apiService.Post(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,

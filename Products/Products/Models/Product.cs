@@ -5,6 +5,7 @@
     using Products.ViewModels;
     using System;
     using System.Windows.Input;
+    using Products.Helpers;
 
     public class Product
     {
@@ -55,7 +56,7 @@
                 {
                     return string.Format(
                         "{0}{1}", 
-                        "http://chejconsultor.ddns.net:9015",
+                        MethodsHelper.GetUrlAPI(),
                         "/Content/Images/NoImage.png");
                 }
 

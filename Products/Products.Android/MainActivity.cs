@@ -4,8 +4,9 @@
     using Android.Content.PM;
     using Android.OS;
 
-    [Activity(Label = "Products", 
-        Icon = "@drawable/icon", 
+    [Activity(
+        Label = "Products", 
+        Icon = "@drawable/ic_launcher", 
         Theme = "@style/MainTheme",
         MainLauncher = true, 
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
