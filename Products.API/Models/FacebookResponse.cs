@@ -83,9 +83,4 @@
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
     }
-<<<<<<< Updated upstream
-
 }
-=======
-}
->>>>>>> Stashed changes
