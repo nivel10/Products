@@ -373,7 +373,7 @@
 
             //  Invoca el metodo que hace el insert de datos (Api)
             var response = await apiService.Post(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 "/api",
                 "/Products",
                 mainViewModel.Token.TokenType,

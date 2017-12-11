@@ -96,6 +96,11 @@
     <Compile Include="Views\UbicationsView.xaml.cs">
       <DependentUpon>UbicationsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoginFacebookView.xaml.cs">
+      <DependentUpon>LoginFacebookView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FacebookResponse.cs" />
+    <Compile Include="Helpers\MethodsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
@@ -116,6 +121,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\NewProductView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LoginFacebookView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -23,6 +23,10 @@
             <Color x:Key="ButonSaveColor">#46A06A</Color>
             <Color x:Key="ButonFaceBookColor">#3b5998</Color>
 
+            <!--Static Parameters-->
+            <x:String x:Key="UrlAPI">http://chejconsultor.ddns.net:9015</x:String>
+            <x:String x:Key="CompanyName">CHEJ Consultor, C.A.</x:String>
+            
         </ResourceDictionary>
         
 	</Application.Resources>

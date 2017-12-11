@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.Products">
-  <uses-sdk android:minSdkVersion="15" />
-
-  <!-- Se agregan los permisos de Android para el acceso a recursos del dispositivo-->
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-  <!-- El Nuget que se emplea para verificar el estatus de la conexion necesita los permisos -->
-  <!-- Para poder consultar el estado de la conexion en modo debug funciona, en release no -->
-  <uses-permission android:name="android.permission.CAMERA" />
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-  <!--Se aregan los permisos para el uso de los mapas y GPS-->
-  <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-  <application android:label="Products.Android">
-    
-    <meta-data android:name="com.google.android.maps.v2.API_KEY"
-               android:value="AIzaSyCbmqq-_puSEtEdOhbh9RnoJAJ0dqyiKbg" />
-    
-  </application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.chejconsultor.Products">
+	<uses-sdk android:minSdkVersion="15" />
+	<!-- Se agregan los permisos de Android para el acceso a recursos del dispositivo-->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<!-- El Nuget que se emplea para verificar el estatus de la conexion necesita los permisos -->
+	<!-- Para poder consultar el estado de la conexion en modo debug funciona, en release no -->
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<!--Se aregan los permisos para el uso de los mapas y GPS-->
+	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<application android:label="Products" android:icon="@drawable/ic_launcher">
+		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCbmqq-_puSEtEdOhbh9RnoJAJ0dqyiKbg" />
+	</application>
 </manifest>

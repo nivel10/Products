@@ -6,6 +6,7 @@
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
     using Xamarin.Forms.Maps;
+    using Products.Helpers;
 
     public class UbicationsViewModel
     {
@@ -74,7 +75,7 @@
 
             //  Consume el ApiService
             var response = await apiService.GetList<Ubication>(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 "/api",
                 "/Ubications",
                 mainViewModel.Token.TokenType,

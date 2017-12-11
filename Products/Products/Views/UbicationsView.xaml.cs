@@ -52,7 +52,7 @@
                     Distance.FromKilometers(1)));
 
                 //  Metodo que carga los Pin's
-                // await LoadPins();
+                await LoadPins();
             }
         }
 

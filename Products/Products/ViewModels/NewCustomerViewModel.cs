@@ -274,7 +274,7 @@
 
             //  Invoca el Post (Insert) del API
             var response = await apiService.Post(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 "/api",
                 "/Customers",
                 customer);
@@ -290,7 +290,7 @@
 
             //  Optiene el Token de acceso del usuario ya creado
             var response2 = await apiService.GetToken(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 Email,
                 Password);
 

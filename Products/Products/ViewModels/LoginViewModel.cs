@@ -4,6 +4,7 @@
     using Products.Services;
     using System.ComponentModel;
     using System.Windows.Input;
+    using Products.Helpers;
 
     public class LoginViewModel : INotifyPropertyChanged
     {
@@ -39,6 +40,13 @@
         {
             get { return new RelayCommand(RegistreNewUser); }
         }
+
+        public ICommand LoginWithFacebookCommand
+        {
+            get
+            {
+                return new RelayCommand(LoginWithFacebook);
+            }         } 
         
         #endregion
 
@@ -198,7 +206,7 @@
 
             //  Valida si se puede optenet el Token
             var tokenResponse = await apiService.GetToken(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 Email,
                 Password);
             if (tokenResponse == null)
@@ -266,6 +274,12 @@
 
             //  Navega a la NewCustomerView
             await navigationService.NavigateOnLogin("NewCustomerView");
+        }
+
+        //  Invoca el metodo de navegacion
+        async void LoginWithFacebook()
+        {
+            await navigationService.NavigateOnLogin("LoginFacebookView");
         }
 
         #endregion

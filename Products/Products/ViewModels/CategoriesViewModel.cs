@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
+    using Products.Helpers;
 
     public class CategoriesViewModel : INotifyPropertyChanged
     {
@@ -109,6 +110,8 @@
             var connection = await apiService.CheckConnection();
             if (!connection.IsSuccess)
             {
+                //  ActivityIndicator del View
+                IsRefreshing = false;
                 await dialogService.ShowMessage("Error", connection.Message);
                 return;
             }
@@ -118,7 +121,7 @@
 
             //  Optine una lista de categorias List<Category>
             var response = await apiService.GetList<Category>(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,
@@ -211,7 +214,7 @@
             //  Invoca el metodo aue hqce el insert de datos (Put)
             //  Put = Verbo que hace referencia modificar
             var response = await apiService.Delete(
-                "http://chejconsultor.ddns.net:9015",
+                MethodsHelper.GetUrlAPI(),
                 "/api",
                 "/Categories",
                 mainViewModel.Token.TokenType,
