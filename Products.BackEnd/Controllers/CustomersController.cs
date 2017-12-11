@@ -16,6 +16,7 @@
         public async Task<ActionResult> Index()
         {
             return View(await db.Customers
+                .OrderBy(c=> c.CustomerType)
                 .OrderBy(c => c.FirstName)
                 .OrderBy(c => c.LastName)
                 .ToListAsync());
