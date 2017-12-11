@@ -238,6 +238,7 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CategoryResponse.cs" />
+    <Compile Include="Models\FacebookResponse.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ProductRequest.cs" />
     <Compile Include="Models\ProductResponse.cs" />
@@ -245,7 +246,6 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Models\FacebookResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -257,7 +257,7 @@
     <Content Include="Content\Images\ff507cf6-d717-4470-bc07-26fa02a5a9ce.jpg" />
     <Content Include="Content\Images\Limon.png" />
     <Content Include="Content\Images\NoImage.png" />
-    <Content Include="Content\Images\Piña.png" />
+    <Content Include="Content\Images\Piña.png" />
     <Content Include="Content\Images\UvaImportada.png" />
     <Content Include="Content\Images\UvaNacional.png" />
     <Content Include="favicon.ico" />

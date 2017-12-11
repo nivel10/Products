@@ -4,10 +4,10 @@
     using Domain;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using Newtonsoft.Json.Linq;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Validation;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
@@ -121,63 +121,68 @@
         //    }
         //}
 
-        //[HttpPost]
-        //[Route("LoginFacebook")]
-        //public async Task<IHttpActionResult> LoginFacebook(FacebookResponse profile)
-        //{
-        //    try
-        //    {
-        //        var customer = await db.Customers
-        //            .Where(c => c.Email == profile.Id)
-        //            .FirstOrDefaultAsync();
-        //        if (customer == null)
-        //        {
-        //            customer = new Customer
-        //            {
-        //                Email = profile.Id,
-        //                FirstName = profile.FirstName,
-        //                LastName = profile.LastName,
-        //                CustomerType = 2,
-        //                Password = profile.Id,
-        //            };
+        [HttpPost]
+        [Route("LoginFacebook")]
+        public async Task<IHttpActionResult> LoginFacebook(FacebookResponse profile)
+        {
+            try
+            {
+                //  Busca enn la tabla customer el ProfileID
+                var customer = await db.Customers
+                    .Where(c => c.Email == profile.Id)
+                    .FirstOrDefaultAsync();
+                //  Si no lo encuentra lo crea en la tabla Customer
+                if (customer == null)
+                {
+                    customer = new Customer
+                    {
+                        Email = profile.Id,
+                        FirstName = profile.FirstName,
+                        LastName = profile.LastName,
+                        CustomerType = 2,
+                        Password = profile.Id,
+                    };
 
-        //            db.Customers.Add(customer);
-        //            CreateUserASP(profile.Id, profile.Id);
-        //        }
-        //        else
-        //        {
-        //            customer.FirstName = profile.FirstName;
-        //            customer.LastName = profile.LastName;
-        //            customer.Password = profile.Id;
-        //            db.Entry(customer).State = EntityState.Modified;
-        //        }
+                    //  Creamos en la tabla Customer
+                    db.Customers.Add(customer);
+                    //  Se crea el usario ASP
+                    CreateUserASP(profile.Id, profile.Id);
+                }
+                else
+                {
+                    //  En el caso de que exista se actualiza los campos
+                    customer.FirstName = profile.FirstName;
+                    customer.LastName = profile.LastName;
+                    customer.Password = profile.Id;
+                    db.Entry(customer).State = EntityState.Modified;
+                }
 
-        //        await db.SaveChangesAsync();
+                await db.SaveChangesAsync();
 
-        //        return Ok(true);
-        //    }
-        //    catch (DbEntityValidationException e)
-        //    {
-        //        var message = string.Empty;
-        //        foreach (var eve in e.EntityValidationErrors)
-        //        {
-        //            message = string.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-        //                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-        //            foreach (var ve in eve.ValidationErrors)
-        //            {
-        //                message += string.Format("\n- Property: \"{0}\", Error: \"{1}\"",
-        //                    ve.PropertyName, ve.ErrorMessage);
-        //            }
-        //        }
+                return Ok(true);
+            }
+            catch (DbEntityValidationException e)
+            {
+                var message = string.Empty;
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    message = string.Format("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        message += string.Format("\n- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
 
-        //        return BadRequest(message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-        
+                return BadRequest(message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()
         {
