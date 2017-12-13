@@ -99,8 +99,8 @@
     <Compile Include="Views\LoginFacebookView.xaml.cs">
       <DependentUpon>LoginFacebookView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\FacebookResponse.cs" />
     <Compile Include="Helpers\MethodsHelper.cs" />
+    <Compile Include="Models\FacebookResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
