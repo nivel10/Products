@@ -4,11 +4,20 @@
     using Android.Content.PM;
     using Android.OS;
 
+    //  Esta linea se comenta para colocar el MainLauncher en false ya que la
+    //  Aplicacion inicia en el Activity Splash
+    //[Activity(
+        //Label = "Products", 
+        //Icon = "@drawable/ic_launcher", 
+        //Theme = "@style/MainTheme",
+        //MainLauncher = true, 
+        //ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+
     [Activity(
-        Label = "Products", 
-        Icon = "@drawable/ic_launcher", 
+        Label = "Products",
+        Icon = "@drawable/ic_launcher",
         Theme = "@style/MainTheme",
-        MainLauncher = true, 
+        MainLauncher = false,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {

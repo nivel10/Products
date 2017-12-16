@@ -7,23 +7,27 @@
 
     <!-- ToolbarItems -->
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="ic_action_add_circle.png"
-                     Command="{Binding NewCategoryCommand}"/>
+        <ToolbarItem Command="{Binding NewCategoryCommand}"
+                     Icon="ic_action_add_circle.png"/>
     </ContentPage.ToolbarItems>
-
+    
     <ContentPage.Content>
 
         <StackLayout BindingContext="{Binding Categories}"
-                     Margin="10,10"
                      Padding="5">
 
+            <!--SearchBar Definition-->
+            <SearchBar Placeholder="Search...!!!"
+                       Text="{Binding Filter, Mode=TwoWay}"
+                       SearchCommand="{Binding SearchCommand}"/>
+            
             <!--Estas propiedades hace el Refresh del View
                 Para que se ejecuten debe tener estas dos propiedades
                 IsPullToRefreshEnabled="True" => Hace que el evento de tomar, 
                 jalar hacia abajo y soltar de ejecute
                 RefreshCommand="{Binding RefreshCommand}" 
                 => Es el command que invoca el methodo en el ViewModel-->
-
+            
             <ListView HasUnevenRows="True"
                       IsPullToRefreshEnabled="True"
                       IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"

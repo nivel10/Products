@@ -6,6 +6,8 @@
     using System;
     using System.Windows.Input;
     using Products.Helpers;
+    using SQLite.Net.Attributes;
+    using SQLiteNetExtensions.Attributes;
 
     public class Product
     {
@@ -26,9 +28,14 @@
 
         #region Properties
 
+        [PrimaryKey]    //  Codigo SQLite
         public int ProductId { get; set; }
 
+        [ForeignKey(typeof(Category))]  //  Codigo SQLite
         public int CategoryId { get; set; }
+
+        [ManyToOne] //  Codigo SQLite
+        public Category Category { get; set; }
 
         public string Description { get; set; }
 

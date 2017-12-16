@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Products.Helpers;
+    using System;
 
     public class CategoriesViewModel : INotifyPropertyChanged
     {
@@ -21,6 +22,7 @@
         private static CategoriesViewModel _instance;
         private List<Category> categories;
         private bool _isRefreshing;
+        private string _filter;
 
         #region Events
 
@@ -38,6 +40,11 @@
             {
                 return new RelayCommand(LoadCategories);
             }
+        }
+
+        public ICommand SearchCommand
+        {
+            get { return new RelayCommand(Search); }
         }
 
         #endregion
@@ -77,6 +84,32 @@
                         this, 
                         new PropertyChangedEventArgs(nameof(IsRefreshing)));
                 }
+            }
+        }
+
+        public string Filter
+        {
+            get
+            {
+                return _filter;
+            }
+            set
+            {
+                if(value != _filter)
+                {
+                    _filter = value;
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Filter)));
+                }
+                else
+                {
+                    PropertyChanged?.Invoke(
+                        this, 
+                        new PropertyChangedEventArgs(nameof(Filter)));
+                }
+                //  Invoca el metodo de busqueda
+                Search();
             }
         }
 
@@ -243,6 +276,22 @@
             await dialogService.ShowMessage(
                 "Information", 
                 "Category is deleted...!!!");
+        }
+
+        private void Search()
+        {
+            //  ActivityIndicator del View
+            IsRefreshing = true;
+
+            //  Hace la busqueda en el Categories
+            CategoriesList = new ObservableCollection<Category>(
+                categories
+                .Where(c => c.Description.ToLower().Contains(Filter.ToLower()))
+                .OrderBy(c => c.Description)
+            );
+
+            //  ActivityIndicator del View
+            IsRefreshing = false;
         }
 
         #endregion Methods

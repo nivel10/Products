@@ -5,6 +5,8 @@
     using Products.ViewModels;
     using System.Collections.Generic;
     using System.Windows.Input;
+    using SQLite.Net.Attributes;
+    using SQLiteNetExtensions.Attributes;
 
     public class Category
     {
@@ -53,10 +55,12 @@
 
         #region Properties
 
+        [PrimaryKey]    //  Codigo SQLite
         public int CategoryId { get; set; }
 
         public string Description { get; set; }
 
+        [OneToMany(CascadeOperations = CascadeOperation.All)]   //  Codigo SQLite
         public List<Product> Products { get; set; }
 
         #endregion

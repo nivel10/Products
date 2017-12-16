@@ -18,6 +18,7 @@
 
         #region Services
 
+        private DataService dataService;
         private DialogService dialogService;
         private ApiService apiService;
         private NavigationService navigationService;
@@ -164,6 +165,7 @@
             IsToggled = true;
 
             //  Instancia de los services
+            dataService = new DataService();
             dialogService = new DialogService();
             apiService = new ApiService();
             navigationService = new NavigationService();
@@ -228,6 +230,10 @@
                     tokenResponse.ErrorDescription);
                 return;
             }
+
+            //  Garda los datos del response en las tablas de SQLite
+            tokenResponse.IsRemembered = IsToggled;
+            dataService.DeleteAllAndInsert(tokenResponse);
 
             //  Valida si hubo o no error en los metodos anterior
             SetEnabledDisable(false, true);
