@@ -9,7 +9,6 @@
 
         <ScrollView>
             <StackLayout BindingContext="{Binding Login}"
-                         Margin="10,10"
                          Padding="8"
                          Spacing="14">
                 
@@ -34,6 +33,7 @@
 
                     <Entry Grid.Column="1"
                            Grid.Row="0"
+                           IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                            Keyboard="Email"
                            Placeholder="Enter your email...!!!"
                            Text="{Binding Email, Mode=TwoWay}"/>
@@ -46,6 +46,7 @@
 
                     <Entry Grid.Column="1"
                            Grid.Row="1"
+                           IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                            IsPassword="true"
                            Placeholder="Enter your password...!!!"
                            Text="{Binding Password, Mode=TwoWay}"/>

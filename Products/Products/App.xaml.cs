@@ -13,7 +13,9 @@
         #region Attributes
 
         private static ApiService apiService;
+        private static DataService dataService;
         private static DialogService dialogService;
+        private static NavigationService navigationService;
 
         #endregion Attributes
 
@@ -41,16 +43,39 @@
         {
             InitializeComponent();
 
+            //  Instancia la clase de los services
+            apiService = new ApiService();
+            dataService = new DataService();
+            dialogService = new DialogService();
+            navigationService = new NavigationService();
+
             //  MainPage = new Products.MainPage();
             //  MainPage = new LoginView();
-            MainPage = new NavigationPage(new LoginView());
+            //  MainPage = new NavigationPage(new LoginView());
 
             //  El inicio por el MasterView se aplica para usar el Menu Hamburguesa
             //  MainPage = new MasterView();
 
-            //  Instancia la clase de los services
-            apiService = new ApiService();
-            dialogService = new DialogService();
+            //  Optiene del SQLite el token ya generado
+            var token = dataService.First<TokenResponse>(false);
+            if(token != null &&
+               token.IsRemembered == true &&
+               token.Expires != DateTime.Now)
+            {
+                //  Optoene una inatancia de la MainViewModel
+                var mainViewModel = MainViewModel.GetInstance();
+                //  Asigna el token a la MainViewModel
+                mainViewModel.Token = token;
+                //  Optiene una instancia de las Categories
+                mainViewModel.Categories = new CategoriesViewModel();
+                //  Define el MainPage al MasterView
+                navigationService.SetMainPage("MasterView");
+            }
+            else
+            {
+                //  Navega al LoginView
+                MainPage = new NavigationPage(new LoginView());
+            }
         }
 
         #endregion Constructor

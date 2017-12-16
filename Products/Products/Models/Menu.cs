@@ -9,6 +9,7 @@
     {
         #region Attributes
 
+        public DataService dataService;
         public NavigationService navigationService;
 
         #endregion Attributes
@@ -37,6 +38,7 @@
         public Menu()
         {
             //  Instancia un objeto de la clase (Service)
+            dataService = new DataService();
             navigationService = new NavigationService();
         }
 
@@ -54,6 +56,9 @@
                         new LoginViewModel();
                     MainViewModel.GetInstance().Login.Email = null;
                     MainViewModel.GetInstance().Login.Password = null;
+                    MainViewModel.GetInstance().Token.IsRemembered = false;
+                    //  Actualiza el token del SQLite
+                    dataService.Update(MainViewModel.GetInstance().Token);
                     //  Navega al LoginView
                     navigationService.SetMainPage("LoginView");
                     break;

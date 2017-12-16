@@ -156,8 +156,8 @@
         public LoginViewModel()
         {
             //  Eliminar
-            Email = "carlos.e.herrera.j@gmail.com";
-            Password = "123456";
+            //  Email = "carlos.e.herrera.j@gmail.com";
+            //  Password = "123456";
 
             //  Inicializacion de datos
             IsRunning = false;
@@ -233,6 +233,7 @@
 
             //  Garda los datos del response en las tablas de SQLite
             tokenResponse.IsRemembered = IsToggled;
+            //  Elimina los registros y solo guarda el ultimo Token
             dataService.DeleteAllAndInsert(tokenResponse);
 
             //  Valida si hubo o no error en los metodos anterior
