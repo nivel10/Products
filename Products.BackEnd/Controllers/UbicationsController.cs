@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Products1.Backend.Controllers
 {
+    [Authorize]
     public class UbicationsController : Controller
     {
         private DataContextLocal db = new DataContextLocal();

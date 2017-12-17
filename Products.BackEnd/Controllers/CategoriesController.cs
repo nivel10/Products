@@ -9,7 +9,8 @@
 
     //  El Autorize obliga al usuario que este logueado para poder acceder al mismo \\
     //  [Authorize(Roles ="Admin")]
-    [Authorize(Users ="carlos.e.herrera.j@gmail.com")]
+    //  [Authorize(Users ="carlos.e.herrera.j@gmail.com")]
+    [Authorize]
     public class CategoriesController : Controller
     {
         private DataContextLocal db = new DataContextLocal();

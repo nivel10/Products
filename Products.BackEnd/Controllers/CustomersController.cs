@@ -8,6 +8,7 @@
     using Products.Domain;
     using System.Linq;
 
+    [Authorize]
     public class CustomersController : Controller
     {
         private DataContextLocal db = new DataContextLocal();
