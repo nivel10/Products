@@ -182,12 +182,11 @@
 
                 //  Guarda los datos en el SQLite
                 SaveCategoriesOnDB();
-
-                //  Carga y ordena los datos en el ObservableCollection
-                CategoriesList = new ObservableCollection<Category>(
-                    categories.OrderBy(c => c.Description));
-    
             }
+
+            //  Carga y ordena los datos en el ObservableCollection
+            CategoriesList = new ObservableCollection<Category>(
+                categories.OrderBy(c => c.Description));
 
             //  ActivityIndicator del View
             IsRefreshing = false;

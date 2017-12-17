@@ -241,6 +241,10 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\drawable\Products512x512Splahs.png" />
+    <AndroidResource Include="Resources\drawable\ic_sync.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_sync.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_sync.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_sync.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

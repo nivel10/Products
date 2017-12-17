@@ -25,8 +25,9 @@
         private string _remarks;
         private bool _isRunnig;
         private bool _isEnabled;
-        private DialogService dialogService;
         private ApiService apiService;
+        private DataService dataService;
+        private DialogService dialogService;
         private NavigationService navigationService;
         private string _image;
         private ImageSource _imageSource;
@@ -265,8 +266,9 @@
             ImageSource = "NoImage.png";
 
             //  Instancia los servicios
-            dialogService = new DialogService();
             apiService = new ApiService();
+            dataService = new DataService();
+            dialogService = new DialogService();
             navigationService = new NavigationService();
         }
 
@@ -337,16 +339,6 @@
             //  Habilita el ActivityIndicator
             SetEnabledDisable(true, false);
 
-            //  Verifica si el dispositio tiene o no acceso a internet
-            var connection = await apiService.CheckConnection();
-            if (!connection.IsSuccess)
-            {
-                //  Habilita el ActivityIndicator
-                SetEnabledDisable(false, true);
-                await dialogService.ShowMessage("Error", connection.Message);
-                return;
-            }
-
             //  Optiene una instancia del MainViewModel para extraer los datos del Token
             var mainViewModel = MainViewModel.GetInstance();
 
@@ -371,38 +363,67 @@
                 Remarks = Remarks,
             };
 
-            //  Invoca el metodo que hace el insert de datos (Api)
-            var response = await apiService.Post(
-                MethodsHelper.GetUrlAPI(),
-                "/api",
-                "/Products",
-                mainViewModel.Token.TokenType,
-                mainViewModel.Token.AccessToken,
-                product);
-
-            //  Valida si hubo o no error en el WepAPI
-            if (!response.IsSuccess)
+            //  Verifica si el dispositio tiene o no acceso a internet
+            var connection = await apiService.CheckConnection();
+            if (!connection.IsSuccess)
             {
+                //  Actualiza el registro a PendingToSave = true
+                product.PendingToSave = true;
+                //  Guarda los datos de product
+                dataService.Insert(product);
                 //  Habilita el ActivityIndicator
                 SetEnabledDisable(false, true);
-                await dialogService.ShowMessage("Error", response.Message);
-                return;
+                await dialogService.ShowMessage(
+                    "Infromation", 
+                    "The product was save on local DB don't forget to upload the record when you have WiFi...!!!");
+                //  await dialogService.ShowMessage("Error", connection.Message);
+                //  return;
             }
+            else
+            {
+                //  Invoca el metodo que hace el insert de datos (Api)
+                var response = await apiService.Post(
+                    MethodsHelper.GetUrlAPI(),
+                    "/api",
+                    "/Products",
+                    mainViewModel.Token.TokenType,
+                    mainViewModel.Token.AccessToken,
+                    product);
+
+                //  Valida si hubo o no error en el WepAPI
+                if (!response.IsSuccess)
+                {
+                    //  Habilita el ActivityIndicator
+                    SetEnabledDisable(false, true);
+                    await dialogService.ShowMessage("Error", response.Message);
+                    return;
+                }
+                //  Hace el Cast del Result a Product
+                product = (Product)response.Result;
+
+                //  Habilita el ActivityIndicator
+                SetEnabledDisable(false, true);
+
+                //  Mensaje de sistema
+                await dialogService.ShowMessage(
+                    "Information",
+                    string.Format(
+                        "Product {0} add successful...!!!",
+                        product.Description.Trim()));
+            }
+
+            ////  Crea una instancia del ProductViewModel
+            //var productViewModel = ProductsViewModel.GetInstance(Products);
+            ////  var productViewModel = ProductsViewModel.GetInstance();
+            //productViewModel.AddProduct((Product)response.Result);
 
             //  Crea una instancia del ProductViewModel
             var productViewModel = ProductsViewModel.GetInstance(Products);
-            //  var productViewModel = ProductsViewModel.GetInstance();
-            productViewModel.AddProduct((Product)response.Result);
+            //  Adiciona el product al MainViewModel (Product);
+            productViewModel.AddProduct(product);
 
             //  Habilita el ActivityIndicator
-            SetEnabledDisable(false, true);
-
-            //  Mensaje de sistema
-            await dialogService.ShowMessage(
-                "Information",
-                string.Format(
-                    "Product {0} add successful...!!!",
-                    product.Description.Trim()));
+            //  SetEnabledDisable(false, true);
 
             //  Hace el Back del NavigationService
             Back();

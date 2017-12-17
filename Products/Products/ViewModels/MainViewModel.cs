@@ -89,6 +89,11 @@
             set;
         }
 
+        public SyncViewModel Sync
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Commands
@@ -182,6 +187,13 @@
                 Icon = "ic_map.png",
                 PageName = "UbicationsView",
                 Title = "Ubications",
+            });
+
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_sync.png",
+                PageName = "SyncView",
+                Title = "Sync Off Line Operations",
             });
 
             MyMenu.Add(new Menu

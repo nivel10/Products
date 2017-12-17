@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundColor="{StaticResource BackGroundColor}"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Sync"
+             x:Class="Products.Views.SyncView">
+    
+	<ContentPage.Content>
+        <ScrollView>
+            <StackLayout BindingContext="{Binding Sync}"
+                         Padding="10"
+                         Spacing="10">
+
+                <Label FontSize="Large"
+                       HorizontalOptions="Center"
+                       Text="{Binding Message, Mode=TwoWay}"
+                       TextColor="{StaticResource FontColor}"
+                       VerticalOptions="CenterAndExpand"/>
+
+                <ActivityIndicator IsRunning="{Binding IsRunning, Mode=TwoWay}" />
+
+                <!--Command Definitions-->
+                <StackLayout Orientation="Horizontal"
+                             VerticalOptions="EndAndExpand"
+                             HorizontalOptions="Center">
+
+                    <Button BackgroundColor="{StaticResource ButonLogin}"
+                            Command="{Binding SyncCommand}"
+                            FontAttributes="Bold"
+                            HeightRequest="46"
+                            Margin="10,0"
+                            Text="Sync"
+                            TextColor="White"
+                            WidthRequest="70"/>
+                    
+                    <Button BackgroundColor="{StaticResource ButonSaveColor}"
+                            Command="{Binding BackCommand}"
+                            FontAttributes="Bold"
+                            HeightRequest="46"
+                            Margin="10,0"
+                            Text="Back"
+                            TextColor="White"
+                            WidthRequest="70"/>
+                    
+                </StackLayout>
+                
+            </StackLayout>
+        </ScrollView>
+	</ContentPage.Content>
+</ContentPage>

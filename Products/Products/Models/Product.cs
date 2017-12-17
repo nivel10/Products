@@ -28,7 +28,7 @@
 
         #region Properties
 
-        [PrimaryKey]    //  Codigo SQLite
+        [PrimaryKey, AutoIncrement]    //  Codigo SQLite
         public int ProductId { get; set; }
 
         [ForeignKey(typeof(Category))]  //  Codigo SQLite
@@ -52,6 +52,8 @@
         public string Remarks { get; set; }
 
         public byte[] ImageArray { get; set; }
+
+        public bool PendingToSave { get; set; }
 
         public string ImageFullPath
         {
