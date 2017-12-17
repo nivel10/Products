@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="My Profile"
+             x:Class="Products.Views.MyProfileView">
+
+	<ContentPage.Content>
+        
+      <ScrollView BindingContext="{Binding MyProfile}">
+        <StackLayout Padding="8" Spacing="10">
+                
+            <Grid Margin="10,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"
+                       Grid.Row="0"
+                       Text="Current Password:"
+                       VerticalOptions="Center"/>
+                    
+                <Entry Grid.Column="1"
+                       Grid.Row="0"
+                       IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                       IsPassword="true"
+                       Placeholder="Enter your password"
+                       Text="{Binding CurrentPassword, Mode=TwoWay}"
+                       VerticalOptions="Center"/>
+                    
+                <Label Grid.Column="0"
+                       Grid.Row="1"
+                       Text="New Password:"
+                       VerticalOptions="Center"/>
+                    
+                <Entry Grid.Column="1"
+                       Grid.Row="1"
+                       IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                       IsPassword="true"
+                       Placeholder="Enter you New Password"
+                       Text="{Binding NewPassword, Mode=TwoWay}"
+                       VerticalOptions="Center"/>
+                    
+                <Label Grid.Column="0"
+                       Grid.Row="2"
+                       Text="Confimr New Password:"
+                       VerticalOptions="Center"/>
+                    
+                <Entry Grid.Column="1"
+                       Grid.Row="2"
+                       IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                       IsPassword="true"
+                       Placeholder="Confimr New Password"
+                       Text="{Binding ConfirmPassword, Mode=TwoWay}"
+                       VerticalOptions="Center"/>
+            </Grid>
+
+            <ActivityIndicator IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                               IsRunning="{Binding IsRunning, Mode=TwoWay}"
+                               VerticalOptions="CenterAndExpand"/>
+                
+            <StackLayout HorizontalOptions="Center"
+                         Orientation="Horizontal"
+                         VerticalOptions="Center">
+                    
+                <Button BackgroundColor="{StaticResource ButonLogin}"
+                        Command="{Binding SaveCommand}"
+                        FontAttributes="Bold"
+                        HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        Margin="10,0"
+                        Text="Save"
+                        TextColor="White"
+                        WidthRequest="70"/>
+                
+                <Button BackgroundColor="{StaticResource ButonSaveColor}"
+                        Command="{Binding BackCommand}"
+                        FontAttributes="Bold"
+                        HeightRequest="46"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        Margin="10,0"
+                        Text="Back"
+                        TextColor="White"
+                        WidthRequest="70"/>
+
+            </StackLayout>
+                
+        </StackLayout>
+      </ScrollView>
+        
+	</ContentPage.Content>
+</ContentPage>

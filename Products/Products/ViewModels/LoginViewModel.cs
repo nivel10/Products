@@ -233,6 +233,7 @@
 
             //  Garda los datos del response en las tablas de SQLite
             tokenResponse.IsRemembered = IsToggled;
+            tokenResponse.Password = Password;
             //  Elimina los registros y solo guarda el ultimo Token
             dataService.DeleteAllAndInsert(tokenResponse);
 

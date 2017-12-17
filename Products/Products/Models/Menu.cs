@@ -87,6 +87,13 @@
                     await navigationService.NavigateOnMaster(PageName);
                     //  SyncData();
                     break;
+
+                case "MyProfileView":
+                    //  Crea una istancia del MyProfileVew
+                    MainViewModel.GetInstance().MyProfile = new MyProfileViewModel();
+                    //  Navega a la pagina del MyProfile
+                    await navigationService.NavigateOnMaster(PageName);
+                    break;
             }
         }
 

@@ -38,6 +38,12 @@
             set;
         }
 
+        public string Password
+        {
+            get;
+            set;
+        }
+
         #endregion Properties
 
         #region Methods

@@ -104,6 +104,11 @@
                     await App.Navigator.PushAsync(
                         new SyncView());
                     break;
+
+                case "MyProfileView":
+                    await App.Navigator.PushAsync(
+                        new MyProfileView());
+                    break;
             };
         }
 
