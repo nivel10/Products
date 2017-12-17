@@ -137,7 +137,7 @@
 
             //  Optiene la List<Product>
             var products = dataService.Get<Product>(false)
-                                      .Where(p => p.PendingToSave == true)
+                                      .Where(p => p.PendingToSave)
                                       .ToList();
             if (products.Count == 0)
             {
@@ -156,6 +156,7 @@
 
             //  Invoca el metodo que habilita - deshabilita los controles
             SetEnabledDisable(false, true);
+            Back();
         }
 
         private async void SaveProducts(List<Product> products)
@@ -185,8 +186,6 @@
             await dialogService.ShowMessage(
                 "Confirmation",
                 "Sync Status Ok...!!!");
-            
-            Back();
         }
 
         private async void Back()

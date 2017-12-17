@@ -63,10 +63,11 @@
                 //  Una imagen que esta en la carpeta de recursos locales
                 if (string.IsNullOrEmpty(Image))
                 {
-                    return string.Format(
-                        "{0}{1}", 
-                        MethodsHelper.GetUrlAPI(),
-                        "/Content/Images/NoImage.png");
+                    //return string.Format(
+                        //"{0}{1}", 
+                        //MethodsHelper.GetUrlAPI(),
+                        //"/Content/Images/NoImage.png");
+                    return "NoImage.png";
                 }
 
                 return string.Format(
