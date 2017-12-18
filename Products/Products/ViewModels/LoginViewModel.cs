@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using System.Windows.Input;
     using Products.Helpers;
+    using System;
 
     public class LoginViewModel : INotifyPropertyChanged
     {
@@ -48,7 +49,11 @@
             {
                 return new RelayCommand(LoginWithFacebook);
             }         } 
-        
+        public ICommand RecoverPasswordCommand
+        {
+            get { return new RelayCommand(RecoverPassword); }
+        }
+
         #endregion
 
         #region Events
@@ -288,6 +293,16 @@
         async void LoginWithFacebook()
         {
             await navigationService.NavigateOnLogin("LoginFacebookView");
+        }
+
+        private async void RecoverPassword()
+        {
+            //  Crea una instancia del PasswordRecovery
+            MainViewModel.GetInstance().PasswordRecovery = 
+                new PasswordRecoveryViewModel();
+
+            //  Navega a la pagina PasswordRecovery
+            await navigationService.NavigateOnLogin("PasswordRecoveryView");
         }
 
         #endregion

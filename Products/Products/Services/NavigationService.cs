@@ -130,6 +130,11 @@
                     await Application.Current.MainPage.Navigation.PushAsync(
                         new LoginFacebookView());
                     break;
+
+                case "PasswordRecoveryView":
+                    await Application.Current.MainPage.Navigation.PushAsync(
+                        new PasswordRecoveryView());
+                    break;
             };
         }
 

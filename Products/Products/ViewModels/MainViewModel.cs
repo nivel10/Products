@@ -101,6 +101,12 @@
             set;
         }
 
+        public PasswordRecoveryViewModel PasswordRecovery
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Commands
